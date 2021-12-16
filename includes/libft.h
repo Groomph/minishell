@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 03:00:19 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:11:20 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,11 @@ void				vecstr_purge(t_vecstr *v);
 void				vecstr_clean(t_vecstr *v);
 void				vecstr_delone(t_vecstr *v, int i, int size);
 BOOL				vecstr_insert(t_vecstr *v, int i, char c);
+BOOL				vecstr_concat(t_vecstr *dest, t_vecstr *src);
+BOOL				vecstr_concat_purge(t_vecstr *dest,
+						t_vecstr *src, BOOL dofree);
+BOOL				vecstr_concat_clean(t_vecstr *dest,
+						t_vecstr *src, BOOL dofree);
 
 /*
  *******************  GARBAGE COLLECTOR  *******************

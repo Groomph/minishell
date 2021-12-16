@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 14:00:03 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 03:29:19 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 18:10:29 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	(*f_termcaps(int i))(t_vector *history, t_input *input)
 		[ARROW_DOWN] = history_down,
 		[ARROW_LEFT] = move_left,
 		[ARROW_RIGHT] = move_right,
-		[DELETE] = char_delete,
+		[DELETE] = delete_char,
 		NULL
 	};
 
@@ -54,68 +54,50 @@ int	get_termcaps(char *input)
 {
 	if (str_n_comp(input, g_termcaps[ARROW_UP], 3) == 0)
 	{
-		printf("arrow up\n");
+//		printf("arrow up\n");
 		return (ARROW_UP);
 	}
 	if (str_n_comp(input, g_termcaps[ARROW_DOWN], 3) == 0)
 	{
-		printf("arrow down\n");
+//		printf("arrow down\n");
 		return (ARROW_DOWN);
 	}
 	if (str_n_comp(input, g_termcaps[ARROW_LEFT], 3) == 0)
 	{
-		printf("arrow left\n");
+//		printf("arrow left\n");
 		return (ARROW_LEFT);
 	}
 	if (str_n_comp(input, g_termcaps[ARROW_RIGHT], 3) == 0)
 	{
-		printf("arrow right\n");
+//		printf("arrow right\n");
 		return (ARROW_RIGHT);
 	}
 	if (str_n_comp(input, g_termcaps[DELETE], 4) == 0)
 	{
-		printf("delete\n");
+//		printf("delete\n");
 		return (DELETE);
 	}
 	return (-1);
 }
 
-void	init_input(t_msh *msh, t_input *input)
+void	interpret_input(t_msh *msh, t_input *input, char *buf)
 {
-	int	i;
-
-	i = 0;
-	input->in = assert_malloc(msh, vecstr_new(10));
-	input->tmp = input->in;
-	input->i = 0;
-	input->hist_i = msh->history.size;
-}
-
-void	interpret_input(t_msh *msh, t_input *input)
-{
-	int	i;
 	int	termcaps;
 
-	(void)msh;
-	i = 0;
-	init_input(msh, input);
-	while (input->input[i])
+	if (buf[0] == 27)
 	{
-		if (input->input[i] == 27)
-		{
-			termcaps = get_termcaps(&(input->input[i]));
-			if (termcaps != -1)
-				f_termcaps(termcaps)(&(msh->history), input);
-			else
-				printf("UNKNOWN TERMCAPS\n");
-			i += 3;
-			if (termcaps == DELETE)
-				i++;
-		}
+		termcaps = get_termcaps(buf);
+		if (termcaps != -1)
+			f_termcaps(termcaps)(&(msh->history), input);
 		else
-		{
-			insert_char(msh, input, input->input[i]);
-			i++;
-		}
+			printf("UNKNOWN TERMCAPS\n");
+	}
+	else if (buf[0] == 127)
+	{
+		backspace(input);
+	}
+	else
+	{
+		insert_char(msh, input, buf[0]);
 	}
 }

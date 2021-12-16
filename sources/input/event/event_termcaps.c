@@ -6,12 +6,13 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 21:48:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 03:31:56 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:46:12 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "input.h"
+#include <unistd.h>
 
 void	history_up(t_vector *history, t_input *input)
 {
@@ -19,6 +20,7 @@ void	history_up(t_vector *history, t_input *input)
 	{
 		input->hist_i--;
 		input->tmp = history->arr[input->hist_i];
+		refresh_display(input);
 		input->i = input->tmp->size;
 	}
 }
@@ -29,30 +31,53 @@ void	history_down(t_vector *history, t_input *input)
 	{
 		input->hist_i++;
 		input->tmp = input->in;
+		refresh_display(input);
 		input->i = input->tmp->size;
 	}
 	else if (input->hist_i < history->size)
 	{
 		input->hist_i++;
 		input->tmp = history->arr[input->hist_i];
+		refresh_display(input);
 		input->i = input->tmp->size;
 	}
 }
 
 void	move_left(t_vector *history, t_input *input)
 {
-	(void)history;
-	input->i--;
+	if (input->i > 0)
+	{
+		(void)history;
+		input->i--;
+		cursor_left(1);
+	}
 }
 
 void	move_right(t_vector *history, t_input *input)
 {
-	(void)history;
-	input->i++;
+	if (input->i < input->tmp->size)
+	{
+		(void)history;
+		input->i++;
+		cursor_right(1);
+	}
 }
 
-void	char_delete(t_vector *history, t_input *input)
+#include <stdio.h>
+
+void	delete_char(t_vector *history, t_input *input)
 {
-	(void)history;
-	vecstr_delone(input->tmp, input->i, 1);
+	if (input->i < input->tmp->size)
+	{
+		(void)history;
+		vecstr_delone(input->tmp, input->i, 1);
+		refresh_deleted(input);
+	/*
+		if (input->i < input->tmp->size)
+			write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
+		write(1, " ", 1);
+		cursor_left(input->tmp->size - input->i + 1);
+		input->display_size--;
+	*/
+	}
 }

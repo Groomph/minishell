@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vecstr_delone.c                                    :+:      :+:    :+:   */
+/*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 14:14:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 22:07:57 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/16 18:02:18 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 19:26:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include <unistd.h>
 
-void	vecstr_delone(t_vecstr *v, int i, int size)
+void	cursor_left(int nb)
 {
-	if (!v || !(v->arr) || i >= v->size)
-		return ;
-	if (i + size > v->size)
-		size = v->size - i;
-	v->size = shift_left_erase(v->arr, i, size);
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		write(1, "\033[1D", 4);
+		i++;
+	}
+}
+
+void	cursor_right(int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		write(1, "\033[1C", 4);
+		i++;
+	}
 }
