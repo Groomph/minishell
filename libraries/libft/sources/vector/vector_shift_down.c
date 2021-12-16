@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   vector_shift_down.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/15 14:25:47 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 00:23:11 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "libft.h"
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
-	{
-		i++;
-		stop--;
-	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+static int	down_recurs(t_vector *v, int i)
+{
+	v->arr[i] = v->arr[i + 1];
+	if (v->arr[i])
+		return (down_recurs(v, i + 1));
+	return (i);
+}
+
+int	vector_shift_down(t_vector *v, int i)
+{
+	if (!v || !(v->arr))
+		return (-1);
+	if (i >= v->size)
+		return (v->size);
+	return (down_recurs(v, i));
 }

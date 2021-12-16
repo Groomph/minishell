@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   vecstr_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/13 01:07:49 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 02:43:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "libft.h"
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
+BOOL	vecstr_add(t_vecstr *v, char c)
+{
+	BOOL	check;
+
+	check = TRUE;
+	if (v->size == v->max)
+		check = vecstr_extend(v);
+	if (v->size < v->max)
 	{
-		i++;
-		stop--;
+		v->arr[v->size] = c;
+		v->size++;
 	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+	return (check);
 }

@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/14 12:39:04 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/16 02:54:57 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ DIR_O = temporary
 
 SOURCES = main.c error.c exit.c \
 	  $(INPUT)/get_input.c $(INPUT)/quote.c $(INPUT)/interpret_input.c \
+	  $(INPUT)/event_simple.c $(INPUT)/event_termcaps.c \
 	  $(LEXER)/tokenizer.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))

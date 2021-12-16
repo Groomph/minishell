@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 00:28:15 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/13 00:40:48 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 02:46:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	*mem_copy(void *dest, const void *src, size_t size)
 	if (!dest && !src)
 		return (NULL);
 	i = 0;
-	p = (unsigned char *) dest;
-	s = (const unsigned char *) src;
+	p = (unsigned char *)dest;
+	s = (const unsigned char *)src;
 	while (i < size)
 	{
 		p[i] = s[i];

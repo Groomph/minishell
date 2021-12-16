@@ -6,9 +6,11 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:26:41 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/14 12:05:51 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/16 02:37:24 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 static int	shift_rec(char *str, int i, int dist)
 {
@@ -20,16 +22,14 @@ static int	shift_rec(char *str, int i, int dist)
 
 int	shift_left_erase(char *str, int i, int dist)
 {
-	int	i2;
+	int	size;
 
-	if (!str)
+	if (!str || i < 0 || dist <= 0)
 		return (-1);
-	i2 = 0;
-	while (i2 < dist && str[i + i2] != '\0')
-		i2++;
-	if (i2 < dist)
-		dist = i2;
-	if (dist == 0)
-		return (i);
+	size = string_len(str);
+	if (i >= size)
+		return (size);
+	if (i + dist > size)
+		dist = size - i;
 	return (shift_rec(str, i, dist));
 }

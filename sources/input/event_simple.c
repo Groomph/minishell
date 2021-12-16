@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   event_simple.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/16 01:31:32 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 03:45:46 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "minishell.h"
+#include "input.h"
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
-	{
-		i++;
-		stop--;
-	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+void	insert_char(t_msh *msh, t_input *input, char c)
+{
+	if (!vecstr_insert(input->tmp, input->i, c))
+		assert_malloc(msh, NULL);
+	input->i++;
 }

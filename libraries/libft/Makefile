@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/13 19:49:45 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/16 02:48:50 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ PARSER	= parser
 BYTE	= bytewise
 
 VECTOR	= vector
+
+VECSTR	= vector_string
 
 GC	= garbage_collector
 
@@ -76,6 +78,11 @@ SOURCES	= valeur_absolue.c optimized_msleep.c \
 	  $(VECTOR)/vector_new.c $(VECTOR)/vector_init.c \
 	  $(VECTOR)/vector_add.c $(VECTOR)/vector_extend.c \
 	  $(VECTOR)/vector_purge.c $(VECTOR)/vector_clean.c \
+	  $(VECTOR)/vector_delone.c $(VECTOR)/vector_shift_down.c \
+	  $(VECSTR)/vecstr_new.c $(VECSTR)/vecstr_init.c \
+	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_extend.c \
+	  $(VECSTR)/vecstr_purge.c $(VECSTR)/vecstr_clean.c \
+	  $(VECSTR)/vecstr_delone.c $(VECSTR)/vecstr_insert.c \
 	  $(GC)/gc_new.c $(GC)/gc_init.c \
 	  $(GC)/gc_add.c \
 	  $(GC)/gc_purge.c $(GC)/gc_clean.c \
@@ -107,6 +114,7 @@ $(DIR_O)/%.o: $(DIR_S)/%.c
 	@mkdir -p $(DIR_O)/$(LIST)
 	@mkdir -p $(DIR_O)/$(LIST2)
 	@mkdir -p $(DIR_O)/$(VECTOR)
+	@mkdir -p $(DIR_O)/$(VECSTR)
 	@mkdir -p $(DIR_O)/$(GC)
 	$(CC) $(CFLAGS) -I $(HEADER) -o $@ -c $<
 

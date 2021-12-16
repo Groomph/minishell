@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   vecstr_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/12 23:54:48 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/15 22:43:19 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "libft.h"
+#include <stdlib.h>
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
+t_vecstr	*vecstr_new(int size)
+{	
+	t_vecstr	*tmp;
+
+	tmp = malloc(sizeof(t_vecstr));
+	if (!tmp)
+		return (NULL);
+	tmp->size = 0;
+	tmp->max = size;
+	tmp->arr = ft_calloc(size + 1, sizeof(*(tmp->arr)));
+	if (!(tmp->arr))
 	{
-		i++;
-		stop--;
+		free(tmp);
+		return (NULL);
 	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+	return (tmp);
 }

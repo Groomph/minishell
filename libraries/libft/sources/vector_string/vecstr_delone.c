@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   vecstr_delone.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/15 14:14:30 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 02:44:18 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "libft.h"
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
-	{
-		i++;
-		stop--;
-	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+void	vecstr_delone(t_vecstr *v, int i, int size)
+{
+	if (!v || !(v->arr) || i >= v->size)
+		return ;
+	if (i + size > v->size)
+		size = v->size - i;
+	v->size = shift_left_erase(v->arr, i, size);
 }

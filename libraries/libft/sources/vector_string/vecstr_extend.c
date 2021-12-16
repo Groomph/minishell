@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_n_comp.c                                       :+:      :+:    :+:   */
+/*   vecstr_extend.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:27:17 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:59:55 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/15 22:46:34 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/16 02:41:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	str_n_comp(const char *str, const char *str2, int stop)
-{
-	int	i;
+#include "libft.h"
 
-	if (stop == 0)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] == str2[i] && stop)
-	{
-		i++;
-		stop--;
-	}
-	if (!stop)
-		return (0);
-	return (str[i] - str2[i]);
+BOOL	vecstr_extend(t_vecstr *v)
+{
+	char	*tmp;
+
+	tmp = ft_calloc(v->max * 2 + 1, sizeof(*(v->arr)));
+	if (!tmp)
+		return (FALSE);
+	mem_copy(tmp, v->arr, sizeof(*(v->arr)) * v->size);
+	free(v->arr);
+	v->arr = tmp;
+	v->max *= 2;
+	return (TRUE);
 }

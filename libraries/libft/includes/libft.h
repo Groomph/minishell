@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/14 17:11:26 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 03:00:19 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef struct s_dynamic_array
 	int		size;
 	int		max;
 }					t_vector;
+
+typedef struct s_dynamic_string
+{
+	char	*arr;
+	int		size;
+	int		max;
+}					t_vecstr;
 
 typedef struct s_garbage_collector
 {
@@ -85,9 +92,9 @@ char				*strjoin_free(char *s1, char *s2,
 						BOOL freestr1, BOOL freestr2);
 size_t				string_len(const char *s);
 char				**string_split(const char *str, char c);
-int					shift_right_add(char *str, char c, int i);
+int					shift_right_add(char *str, int i, char c);
 int					shift_left_erase(char *str, int i, int dist);
-int					str_n_comp(char *str, char *str2, int stop);
+int					str_n_comp(const char *str, const char *str2, int stop);
 char				*str_nstr_comp(char *str1, char *str2, size_t size_str2);
 char				*string_duplicate(const char *original, int size);
 char				*string_chr(const char *str, char c);
@@ -154,6 +161,21 @@ BOOL				vector_add(t_vector *v, void *data);
 BOOL				vector_extend(t_vector *v);
 void				vector_purge(t_vector *v, void (*f)(void *));
 void				vector_clean(t_vector *v, void (*f)(void *));
+void				vector_delone(t_vector *v, int i, void (*f)(void *));
+int					vector_shift_down(t_vector *v, int i);
+
+/*
+ *******************  VECTOR DYNAMIC STRING  *******************
+*/
+
+t_vecstr			*vecstr_new(int size);
+BOOL				vecstr_init(t_vecstr *v, int size);
+BOOL				vecstr_add(t_vecstr *v, char c);
+BOOL				vecstr_extend(t_vecstr *v);
+void				vecstr_purge(t_vecstr *v);
+void				vecstr_clean(t_vecstr *v);
+void				vecstr_delone(t_vecstr *v, int i, int size);
+BOOL				vecstr_insert(t_vecstr *v, int i, char c);
 
 /*
  *******************  GARBAGE COLLECTOR  *******************

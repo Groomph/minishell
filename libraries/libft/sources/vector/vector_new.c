@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:54:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/13 04:40:31 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/15 22:45:33 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vector	*vector_new(int size)
 		return (NULL);
 	tmp->size = 0;
 	tmp->max = size;
-	tmp->arr = ft_calloc(size + 1, sizeof(void *));
+	tmp->arr = ft_calloc(size + 1, sizeof(*(tmp->arr)));
 	if (!(tmp->arr))
 	{
 		free(tmp);

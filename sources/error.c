@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 20:55:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/13 23:35:20 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 01:04:16 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,22 @@ void	*assert_gc(t_msh *msh, void *data)
 		exit_error(msh, "error2\n", 7);
 	}
 	return (data);
+}
+
+void	*assert_malloc(t_msh *msh, void *data)
+{
+	if (!data)
+	{
+		exit_error(msh, "error3\n", 7);
+	}
+	return (data);
+}
+
+char	assert_str(t_msh *msh, t_vecstr *v, char c)
+{
+	if (vecstr_add(v, c))
+	{
+		exit_error(msh, "error4\n", 7);
+	}
+	return (c);
 }
