@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 20:55:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 01:04:16 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:21:00 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ void	exit_error(t_msh *msh, char *error, int size)
 	else
 		perror(error);
 	exit_program(msh);
+}
+
+BOOL	assert_bool(t_msh *msh, BOOL check)
+{
+	if (!check)
+	{
+		exit_error(msh, "error5\n", 7);
+	}
+	return (check);
 }
 
 void	*assert_vector(t_msh *msh, t_vector *v, void *data)
@@ -58,4 +67,14 @@ char	assert_str(t_msh *msh, t_vecstr *v, char c)
 		exit_error(msh, "error4\n", 7);
 	}
 	return (c);
+}
+
+int	assert_errno(t_msh *msh, int i)
+{
+	if (i == -1)
+	{
+		exit_error(msh, "minishell: ", -1);
+	}
+	return (i);
+
 }

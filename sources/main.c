@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/14 21:24:34 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:33:26 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ static BOOL	init_msh(t_msh *msh)
 		return (FALSE);
 	if (!gc_init(&(msh->gc)))
 		return (FALSE);
+	if (!init_terminal(msh))
+	{
+		perror("init_terminal:");
+		return (FALSE);
+	}
 	return (TRUE);
 }
 

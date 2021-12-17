@@ -227,6 +227,11 @@ void				vecstr_purge(t_vecstr *v);
 void				vecstr_clean(t_vecstr *v);
 void				vecstr_delone(t_vecstr *v, int i, int size);
 BOOL				vecstr_insert(t_vecstr *v, int i, char c);
+BOOL				vecstr_concat(t_vecstr *dest, t_vecstr *src);
+BOOL				vecstr_concat_purge(t_vecstr *dest,
+						t_vecstr *src, BOOL dofree);
+BOOL				vecstr_concat_clean(t_vecstr *dest,
+						t_vecstr *src, BOOL dofree);
 
 /*
  *******************  GARBAGE COLLECTOR  *******************
