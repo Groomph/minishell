@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 19:22:05 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/18 16:26:22 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ char			*get_input(t_msh *msh);
 BOOL			is_closed_quote(char *input);
 
 void			tokenizer(t_msh *msh, char *input);
-
+int			get_chartype(int gotten);
 
 #endif
