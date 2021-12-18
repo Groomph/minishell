@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 14:20:53 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 16:26:22 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		*assert_gc(t_msh *msh, void *data, void (*f)(void *));
 void		*assert_malloc(t_msh *msh, void *data);
 BOOL		assert_bool(t_msh *msh, BOOL check);
 int			assert_errno(t_msh *msh, int i);
+int			get_chartype(int gotten);
 char		*get_input(t_msh *msh);
 void		tokenizer(t_msh *msh, char *input);
 
