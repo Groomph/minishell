@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 16:22:48 by romain            #+#    #+#             */
-/*   Updated: 2021/12/13 20:06:57 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:06:31 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static BOOL	is_quote(char c)
 
 BOOL	is_closed_quote(char *input)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 	i = 0;

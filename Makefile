@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/16 20:22:58 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/17 19:36:03 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,10 @@ INPUT = input
 
 EVENT = $(INPUT)/event
 
+HIST = $(INPUT)/history
+
+DISP = $(INPUT)/display
+
 LEXER = lexer
 
 PARSER = parser
@@ -39,7 +43,8 @@ DIR_O = temporary
 SOURCES = main.c error.c exit.c terminal.c \
 	  $(INPUT)/get_input.c $(INPUT)/quote.c $(INPUT)/interpret_input.c \
 	  $(EVENT)/event_simple.c $(EVENT)/event_termcaps.c \
-	  $(EVENT)/cursor_display.c $(EVENT)/input_display.c \
+	  $(DISP)/cursor.c $(DISP)/input_display.c \
+	  $(HIST)/history.c \
 	  $(LEXER)/tokenizer.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
@@ -62,6 +67,8 @@ $(DIR_O)/%.o: $(DIR_S)/%.c
 	@mkdir -p $(DIR_O)
 	@mkdir -p $(DIR_O)/$(INPUT)
 	@mkdir -p $(DIR_O)/$(EVENT)
+	@mkdir -p $(DIR_O)/$(DISP)
+	@mkdir -p $(DIR_O)/$(HIST)
 	@mkdir -p $(DIR_O)/$(LEXER)
 	@mkdir -p $(DIR_O)/$(PARSER)
 	$(CC) $(CFLAGS) -I $(HEADER) -o $@ -c $<
