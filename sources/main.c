@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 01:25:13 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 13:09:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void	minishell(t_msh *msh, char **env)
 	}
 }
 
+//	assert_gc(msh, &(msh->tokens), (void *)(void *)vector_purge);
+//	assert_gc(msh, &(msh->history), (void *)(void *)vector_purge);
+
 static BOOL	init_msh(t_msh *msh)
 {
 	mem_set(msh, 0, sizeof(*msh));
@@ -36,10 +39,8 @@ static BOOL	init_msh(t_msh *msh)
 		return (FALSE);
 	if (!vector_init(&(msh->tokens), 10))
 		return (FALSE);
-//	assert_gc(msh, &(msh->tokens), (void *)(void *)vector_purge);
 	if (!vector_init(&(msh->history), 10))
 		return (FALSE);
-//	assert_gc(msh, &(msh->history), (void *)(void *)vector_purge);
 	if (!init_terminal(msh))
 	{
 		perror("init_terminal:");
