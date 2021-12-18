@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 15:33:26 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 01:25:13 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include <unistd.h>
 
 #include <stdio.h> //test
-
-//void	assert_garbage_collector(void)
+//#include <signal.h> //test
 
 static void	minishell(t_msh *msh, char **env)
 {
@@ -33,12 +32,14 @@ static void	minishell(t_msh *msh, char **env)
 static BOOL	init_msh(t_msh *msh)
 {
 	mem_set(msh, 0, sizeof(*msh));
-	if (!vector_init(&(msh->tokens), 10))
-		return (FALSE);
-	if (!vector_init(&(msh->history), 10))
-		return (FALSE);
 	if (!gc_init(&(msh->gc)))
 		return (FALSE);
+	if (!vector_init(&(msh->tokens), 10))
+		return (FALSE);
+//	assert_gc(msh, &(msh->tokens), (void *)(void *)vector_purge);
+	if (!vector_init(&(msh->history), 10))
+		return (FALSE);
+//	assert_gc(msh, &(msh->history), (void *)(void *)vector_purge);
 	if (!init_terminal(msh))
 	{
 		perror("init_terminal:");
@@ -46,6 +47,13 @@ static BOOL	init_msh(t_msh *msh)
 	}
 	return (TRUE);
 }
+
+/*
+	struct sigaction sig;
+
+	sig.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sig, NULL);
+*/
 
 int	main(int ac, char **av, char **env)
 {

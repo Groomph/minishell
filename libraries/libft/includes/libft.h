@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 19:11:20 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 01:26:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void				vector_purge(t_vector *v, void (*f)(void *));
 void				vector_clean(t_vector *v, void (*f)(void *));
 void				vector_delone(t_vector *v, int i, void (*f)(void *));
 int					vector_shift_down(t_vector *v, int i);
+t_vector			*vector_extract(t_vector *v, int i);
 
 /*
  *******************  VECTOR DYNAMIC STRING  *******************
@@ -188,7 +189,7 @@ BOOL				vecstr_concat_clean(t_vecstr *dest,
 
 t_gc				*gc_new(void);
 BOOL				gc_init(t_gc *gc);
-BOOL				gc_add(t_gc *gc, void *data, void (*f)(void *));
+BOOL				gc_add(t_gc *gc, void *data, void (*f)());
 void				gc_purge(t_gc *gc);
 void				gc_clean(t_gc *gc);
 

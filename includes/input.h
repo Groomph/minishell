@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:34:35 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 22:46:26 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/17 19:31:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_input
 }		t_input;
 
 void	interpret_input(t_msh *msh, t_input *input, char *buf);
+void	add_to_history(t_msh *msh, t_vecstr *input);
 
 void		history_up(t_vector *history, t_input *input);
 void		history_down(t_vector *history, t_input *input);
