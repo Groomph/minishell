@@ -6,26 +6,31 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:54:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 19:14:00 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/17 21:19:03 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
+/*Forced to i++ < max in case of dest == src*/
+
 BOOL	vecstr_concat(t_vecstr *dest, t_vecstr *src)
 {	
 	int	i;
+	int	max;
 
 	if (!dest)
 		return (FALSE);
 	if (!src)
 		return (TRUE);
 	i = 0;
-	while (i < src->size)
+	max = src->size;
+	while (i < max)
 	{
 		if (!vecstr_add(dest, src->arr[i]))
 			return (FALSE);
+		i++;
 	}
 	return (TRUE);
 }

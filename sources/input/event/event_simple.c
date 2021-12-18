@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 01:31:32 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 22:41:54 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:32:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ void	backspace(t_input *input)
 		cursor_left(1);
 		vecstr_delone(input->tmp, input->i, 1);
 		refresh_deleted(input);
+	}
+}
+
 /*
 		write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
                 write(1, " ", 1);
                 cursor_left(input->tmp->size - input->i + 1);
                 input->display_size--;
 */
-	}
-}

@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/16 19:09:38 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/17 19:23:01 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SOURCES	= valeur_absolue.c optimized_msleep.c \
 	  $(VECTOR)/vector_add.c $(VECTOR)/vector_extend.c \
 	  $(VECTOR)/vector_purge.c $(VECTOR)/vector_clean.c \
 	  $(VECTOR)/vector_delone.c $(VECTOR)/vector_shift_down.c \
+	  $(VECTOR)/vector_extract.c \
 	  $(VECSTR)/vecstr_new.c $(VECSTR)/vecstr_init.c \
 	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_extend.c \
 	  $(VECSTR)/vecstr_purge.c $(VECSTR)/vecstr_clean.c \

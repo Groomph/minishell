@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 21:48:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 22:46:12 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/17 13:33:18 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	move_right(t_vector *history, t_input *input)
 	}
 }
 
-#include <stdio.h>
-
 void	delete_char(t_vector *history, t_input *input)
 {
 	if (input->i < input->tmp->size)
@@ -72,6 +70,9 @@ void	delete_char(t_vector *history, t_input *input)
 		(void)history;
 		vecstr_delone(input->tmp, input->i, 1);
 		refresh_deleted(input);
+	}
+}
+
 	/*
 		if (input->i < input->tmp->size)
 			write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
@@ -79,5 +80,3 @@ void	delete_char(t_vector *history, t_input *input)
 		cursor_left(input->tmp->size - input->i + 1);
 		input->display_size--;
 	*/
-	}
-}

@@ -1,28 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/13 21:00:06 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 01:31:07 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/18 14:17:42 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-#include <stdio.h>
+#ifndef LEXER_H
+# define LEXER_H
 
-//	vector_purge(&(msh->tokens), free);
-//	vector_purge(&(msh->history), vecstr_clean);
+# include "libft.h"
+# include <termios.h>
 
-void	exit_program(t_msh *msh)
+enum	e_char_type
 {
-	gc_purge(&(msh->gc));
-	free(msh->tokens.arr);
-	free(msh->history.arr);
-	if (!(reset_terminal(msh)))
-		perror("reset_terminal:");
-	exit(1);
-}
+	OPERATOR = 0,
+	QUOTE,
+	CHARACTER,
+	BLANK,
+	IGNORE,
+	CHAR_NB
+};
+
+enum	e_token_type
+{
+	TOK_OPERATOR = 0,
+	TOK_QUOTED_STR,
+	TOK_WORD,
+	NOT_A_TOKEN,
+	TOK_NB
+};
+
+int			get_token(char *input);
+
+int			get_char_type(int c);
+int			get_token_type(int char_type);
+BOOL		is_allowed(int char_type, int token_type);
+
+#endif
