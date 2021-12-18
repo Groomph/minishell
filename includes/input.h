@@ -6,11 +6,14 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:34:35 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 19:31:58 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 14:23:55 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef INPUT_H
+# define INPUT_H
+
+# include "minishell.h"
 
 enum	e_termcaps
 {
@@ -21,17 +24,23 @@ enum	e_termcaps
 	DELETE
 };
 
-typedef struct	s_input
-{
-	t_vecstr	*in;        //buffer de l'actuel input
-	t_vecstr	*tmp;      //la string sur laquelle on travaille
-	int		i;		//position du curseur
-	int		hist_i;		//position dans l'historique
-	int		display_size;	//taille de ce qui affiché
-}		t_input;
+	//buffer de l'actuel input
+	//la string sur laquelle on travaille
+	//position du curseur
+	//position dans l'historique
+	//taille de ce qui affiché
 
-void	interpret_input(t_msh *msh, t_input *input, char *buf);
-void	add_to_history(t_msh *msh, t_vecstr *input);
+typedef struct s_input
+{
+	t_vecstr	*in;
+	t_vecstr	*tmp;
+	int			i;
+	int			hist_i;
+	int			display_size;
+}			t_input;
+
+void		interpret_input(t_msh *msh, t_input *input, char *buf);
+void		add_to_history(t_msh *msh, t_vecstr *input);
 
 void		history_up(t_vector *history, t_input *input);
 void		history_down(t_vector *history, t_input *input);
@@ -49,3 +58,4 @@ void		refresh_display(t_input *input);
 void		refresh_deleted(t_input *input);
 //void		refresh_display(int cursor, char *str, int str_s, int display_s);
 
+#endif
