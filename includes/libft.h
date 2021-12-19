@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 01:26:22 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/18 17:52:59 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void				vector_clean(t_vector *v, void (*f)(void *));
 void				vector_delone(t_vector *v, int i, void (*f)(void *));
 int					vector_shift_down(t_vector *v, int i);
 t_vector			*vector_extract(t_vector *v, int i);
+void				*vector_get(t_vector *v, int i);
 
 /*
  *******************  VECTOR DYNAMIC STRING  *******************

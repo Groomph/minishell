@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/18 13:48:51 by romain           ###   ########.fr        #
+#    Updated: 2021/12/18 17:31:45 by aldamien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ DISP = $(INPUT)/display
 
 LEXER = lexer
 
-PARSER = parser
+PARSER = parsing
 
 DIR_O = temporary
 
@@ -45,7 +45,8 @@ SOURCES = main.c error.c exit.c terminal.c \
 	  $(EVENT)/event_simple.c $(EVENT)/event_termcaps.c \
 	  $(DISP)/cursor.c $(DISP)/input_display.c \
 	  $(HIST)/history.c \
-	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c
+	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c\
+	  $(PARSER)/parsing.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

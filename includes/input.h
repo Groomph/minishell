@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:34:35 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 14:23:55 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/19 12:26:29 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_input
 }			t_input;
 
 void		interpret_input(t_msh *msh, t_input *input, char *buf);
+BOOL		is_closed_quote(char *txt);
 void		add_to_history(t_msh *msh, t_vecstr *input);
 
 void		history_up(t_vector *history, t_input *input);
