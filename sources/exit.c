@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 21:00:06 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 01:31:07 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 18:04:07 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,30 @@
 //	vector_purge(&(msh->tokens), free);
 //	vector_purge(&(msh->history), vecstr_clean);
 
+void	display_gc(t_gc *gc)
+{
+	int	i;
+
+	printf("%i %i\n", gc->collec.size, gc->collec.max);
+	printf("%i %i\n", gc->cleaner.size, gc->cleaner.max);
+	i = 0;
+	while (i < gc->collec.size)
+	{
+		printf("%p\n", gc->collec.arr[i]);
+		printf("%p\n", gc->cleaner.arr[i]);
+		i++;
+	}
+}
+
 void	exit_program(t_msh *msh)
 {
+	display_gc(&(msh->gc));
+	printf("test1\n");
 	gc_purge(&(msh->gc));
+	printf("test2\n");
 	free(msh->tokens.arr);
 	free(msh->history.arr);
+	array_clear((void **)msh->paths);
 	if (!(reset_terminal(msh)))
 		perror("reset_terminal:");
 	exit(1);

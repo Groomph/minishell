@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 14:00:32 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 17:49:08 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	tokenizer(t_msh *msh, char *input)
 		i = get_token(input);
 		if (i > 0)
 		{
-			token = assert_gc(msh, substr(input, 0, i), free);
+			token = assert_malloc(msh, substr(input, 0, i));
 			assert_bool(msh, vector_add(&(msh->tokens), token));
 			input += i;
 		}

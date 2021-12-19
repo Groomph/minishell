@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 16:24:34 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 17:54:48 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vector	*parse_line(t_msh *msh)
 	int		i;
 
 	line = vector_new(3);
-	assert_gc(msh, line, (void *)(void *)vector_clean);
+	assert_gc(msh, line, (void *)(void *)vector_arrstr_clean);
 	i = 0;
 	while (msh->tokens.arr[i])
 	{
@@ -62,7 +62,8 @@ char	*find_right_path(t_msh *msh, char *command)
 	free(str);
 	if (!msh->paths[i])
 		return (command);
-	assert_gc(msh, test, free);
+	free(command);
+//	assert_gc(msh, test, free);
 	return (test);
 }
 
@@ -81,7 +82,7 @@ char	**get_command(t_msh *msh, int *i)
 		token = vector_get(&msh->tokens, (*i));
 	}
 	cmds = malloc(sizeof(char *) * ((*i) - j + 1));
-	assert_gc(msh, cmds, free);
+	assert_malloc(msh, cmds);
 	cmds[(*i) - j] = NULL;
 	k = 0;
 	while (msh->tokens.arr[j] && j < (*i))
