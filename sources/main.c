@@ -6,13 +6,14 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 16:47:36 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 18:57:18 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include "parsing.h"
+#include "exe.h"
 #include <unistd.h>
 
 #include <stdio.h> //test
@@ -37,6 +38,7 @@ static void	minishell(t_msh *msh, char **env)
 		input = get_input(msh);
 		tokenizer(msh, input);
 		parsed = parse_line(msh);
+		execute(msh, env, parsed->arr[0]);
 		clean_token(msh);
 	}
 }

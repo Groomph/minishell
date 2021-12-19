@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:28:49 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 01:08:08 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:01:22 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ char	*get_input(t_msh *msh)
 	size = string_len(input.tmp->arr);
 	printf("\n\ninput: %s§\nsize: %i\n\n", input.tmp->arr, size);
 	print_line_int(input.tmp->arr, size);
+	reset_terminal(msh);
 	return (input.tmp->arr);
 }

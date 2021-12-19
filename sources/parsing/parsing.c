@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 17:54:48 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 18:40:51 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_vector	*parse_line(t_msh *msh)
 			i++;
 		}
 		token = vector_get(line, line->size);
-		printf("%s\n", token);
 	}
 	return (line);
 }
@@ -63,7 +62,6 @@ char	*find_right_path(t_msh *msh, char *command)
 	if (!msh->paths[i])
 		return (command);
 	free(command);
-//	assert_gc(msh, test, free);
 	return (test);
 }
 
@@ -88,10 +86,10 @@ char	**get_command(t_msh *msh, int *i)
 	while (msh->tokens.arr[j] && j < (*i))
 	{
 		cmds[k] = vector_get(&(msh->tokens), j); 
-		printf("%s\n", cmds[k]);
 		k++;
 		j++;
 	}
 	cmds[0] = find_right_path(msh, cmds[0]);
+	printf("%s\n", cmds[0]);
 	return (cmds);
 }
