@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:28:49 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 19:01:22 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:42:30 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include <stdio.h> //test
 
+/*
 static void	print_line_int(char *line, int max)
 {
 	int	i;
@@ -28,6 +29,7 @@ static void	print_line_int(char *line, int max)
 		i++;
 	}
 }
+*/
 
 /*
 static voidd	isplay_info_input(t_input *input)
@@ -91,13 +93,17 @@ char	*get_input(t_msh *msh)
 	t_input	input;
 	int		size;
 
+//	if (!init_terminal(msh))
+//	{
+//		perror("init_terminal:");
+//	}
 	readinput(msh, &input, "minishell: ", 11);
 	if (!is_closed_quote(input.tmp->arr))
 		complete_input(msh, &input);
 	add_to_history(msh, input.tmp);
 	size = string_len(input.tmp->arr);
-	printf("\n\ninput: %s§\nsize: %i\n\n", input.tmp->arr, size);
-	print_line_int(input.tmp->arr, size);
-	reset_terminal(msh);
+//	printf("\n\ninput: %s§\nsize: %i\n\n", input.tmp->arr, size);
+//	print_line_int(input.tmp->arr, size);
+//	reset_terminal(msh);
 	return (input.tmp->arr);
 }

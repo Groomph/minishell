@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 21:00:06 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 18:04:07 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:27:15 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 //	vector_purge(&(msh->tokens), free);
 //	vector_purge(&(msh->history), vecstr_clean);
 
+/*
 void	display_gc(t_gc *gc)
 {
 	int	i;
@@ -31,13 +32,10 @@ void	display_gc(t_gc *gc)
 		i++;
 	}
 }
-
+*/
 void	exit_program(t_msh *msh)
 {
-	display_gc(&(msh->gc));
-	printf("test1\n");
 	gc_purge(&(msh->gc));
-	printf("test2\n");
 	free(msh->tokens.arr);
 	free(msh->history.arr);
 	array_clear((void **)msh->paths);

@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 18:40:51 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:32:41 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ char	**get_command(t_msh *msh, int *i)
 		j++;
 	}
 	cmds[0] = find_right_path(msh, cmds[0]);
-	printf("%s\n", cmds[0]);
 	return (cmds);
 }

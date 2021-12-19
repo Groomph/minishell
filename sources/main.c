@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 18:57:18 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:28:14 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,6 @@ static void	minishell(t_msh *msh, char **env)
 	}
 }
 
-void	print_path(char **paths)
-{
-	int	i;
-
-	i = 0;
-	while (paths[i])
-	{
-		printf("%s\n", paths[i]);
-		i++;
-	}
-}
-
 //	assert_gc(msh, &(msh->tokens), (void *)(void *)vector_purge);
 //	assert_gc(msh, &(msh->history), (void *)(void *)vector_purge);
 
@@ -69,7 +57,8 @@ static BOOL	init_msh(t_msh *msh, char **env)
 		return (FALSE);
 	if (!get_path(msh, env))
 		return (FALSE);
-	print_path(msh->paths);
+//	if (tcgetattr(0, &(msh->term_config)) == -1)
+//		return (FALSE);
 	if (!init_terminal(msh))
 	{
 		perror("init_terminal:");
