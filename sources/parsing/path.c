@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 14:58:41 by aldamien         ###   ########.fr       */
+/*   Created: 2021/12/19 12:44:04 by aldamien          #+#    #+#             */
+/*   Updated: 2021/12/19 15:06:48 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "parsing.h"
 
-# include "minishell.h"
-# include "lexer.h"
+static char	*paths_finder(char **env)
+{
+	int	i;
 
+	i = 0;
+	while (env[i])
+	{
+		if (str_n_comp("PATH", env[i], 4) == 0)
+			return (env[i]);
+		i++;
+	}
+	return (NULL);
+}
 
-// parse_command
+BOOL	get_path(t_msh *msh, char **env)
+{
+	char	*verif;
 
-char	**get_command(t_msh *msh, int *i);
-t_vector	*parse_line(t_msh *msh);
-
-// parse_env
-
-BOOL	get_path(t_msh *msh, char **env);
-
-#endif
+	verif = paths_finder(env);
+	if (verif)
+		msh->paths = string_split(verif, ':');
+	else
+		return (FALSE);
+	return (TRUE);
+}

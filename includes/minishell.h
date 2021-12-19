@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 16:26:22 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 14:27:14 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ typedef struct s_minishell
 	t_vector	tokens;
 	t_vector	history;
 	t_term		term_config;
+	char		**paths;
 }			t_msh;
+
 BOOL		init_terminal(t_msh *msh);
 BOOL		reset_terminal(t_msh *msh);
 void		exit_program(t_msh *msh);

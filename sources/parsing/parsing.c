@@ -6,12 +6,14 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/18 18:02:15 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 15:46:24 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include "stdio.h"
+#include "unistd.h"
 
 t_vector	*parse_line(t_msh *msh)
 {
@@ -36,11 +38,38 @@ t_vector	*parse_line(t_msh *msh)
 	return (line);
 }
 
+char	*find_right_path(t_msh *msh, char *command)
+{
+	int	i;
+	char	*str;
+	char	*test;
+
+	i = 0;
+	str = strjoin("/", command);
+	if (str == NULL)
+		perror(NULL);
+	while (msh->paths[i])
+	{
+		test = strjoin(msh->paths[i], str);
+		if (access(test, X_OK) != 0)
+			free(test);
+		else
+			break;
+		i++;
+	}
+	free(str);
+	if (!msh->paths[i])
+		return (command);
+	assert_gc(msh, test, free);
+	return (test);
+}
+
 char	**get_command(t_msh *msh, int *i)
 {
 	char	**cmds;
 	char	*token;
 	int	j;
+	int	k;
 
 	j = *i;
 	token = vector_get(&msh->tokens, *i);
@@ -49,13 +78,17 @@ char	**get_command(t_msh *msh, int *i)
 		(*i)++;
 		token = vector_get(&msh->tokens, *i);
 	}
-	cmds = malloc(sizeof(char *) * (*i + 1));
+	cmds = malloc(sizeof(char *) * (*i - j + 1));
 	assert_gc(msh, cmds, free);
-	cmds[*i + 1] = NULL;
+	cmds[*i - j + 1] = NULL;
+	k = 0;
 	while (msh->tokens.arr[j] && *i != j)
 	{
-		cmds[j] = msh->tokens.arr[j]; 
+		cmds[k] = msh->tokens.arr[j]; 
+		printf("%s\n", cmds[k]);
+		k++;
 		j++;
 	}
 	return (cmds);
 }
+

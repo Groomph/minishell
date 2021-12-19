@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/18 17:31:45 by aldamien         ###   ########.fr        #
+#    Updated: 2021/12/19 15:03:31 by aldamien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SOURCES = main.c error.c exit.c terminal.c \
 	  $(DISP)/cursor.c $(DISP)/input_display.c \
 	  $(HIST)/history.c \
 	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c\
-	  $(PARSER)/parsing.c
+	  $(PARSER)/parsing.c $(PARSER)/path.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
