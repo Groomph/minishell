@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 15:46:24 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/19 16:24:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ t_vector	*parse_line(t_msh *msh)
 	{
 		token = vector_get(&msh->tokens, i);
 		if (get_char_type(token[0]) != OPERATOR)
-			vector_add(line, get_command(msh, &i));
+			assert_bool(msh, vector_add(line, get_command(msh, &i)));
 		else
 		{
-			vector_add(line, msh->tokens.arr[i]);
+			assert_bool(msh, vector_add(line, msh->tokens.arr[i]));
 			i++;
 		}
+		token = vector_get(line, line->size);
+		printf("%s\n", token);
 	}
 	return (line);
 }
@@ -71,24 +73,24 @@ char	**get_command(t_msh *msh, int *i)
 	int	j;
 	int	k;
 
-	j = *i;
-	token = vector_get(&msh->tokens, *i);
+	j = (*i);
+	token = vector_get(&msh->tokens, (*i));
 	while (token && get_char_type(token[0]) != OPERATOR)
 	{
 		(*i)++;
-		token = vector_get(&msh->tokens, *i);
+		token = vector_get(&msh->tokens, (*i));
 	}
-	cmds = malloc(sizeof(char *) * (*i - j + 1));
+	cmds = malloc(sizeof(char *) * ((*i) - j + 1));
 	assert_gc(msh, cmds, free);
-	cmds[*i - j + 1] = NULL;
+	cmds[(*i) - j] = NULL;
 	k = 0;
-	while (msh->tokens.arr[j] && *i != j)
+	while (msh->tokens.arr[j] && j < (*i))
 	{
-		cmds[k] = msh->tokens.arr[j]; 
+		cmds[k] = vector_get(&(msh->tokens), j); 
 		printf("%s\n", cmds[k]);
 		k++;
 		j++;
 	}
+	cmds[0] = find_right_path(msh, cmds[0]);
 	return (cmds);
 }
-
