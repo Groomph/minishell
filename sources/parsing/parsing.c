@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/20 13:04:14 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:44:40 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,17 @@ char	*find_right_path(t_msh *msh, char *command)
 
 	i = 0;
 	str = strjoin("/", command);
-	if (str == NULL)
-		return (NULL);
+	assert_gc(msh, str, free);
 	while (msh->paths[i])
 	{
 		test = strjoin(msh->paths[i], str);
-		if (!test)
-		{
-			free(str);
-			return (NULL);
-		}
+		assert_gc(msh, test, free);
 		if (access(test, X_OK) == 0)
 			break;
-		free(test);
 		i++;
 	}
-	free(str);
 	if (!msh->paths[i])
 		return (command);
-	assert_gc(msh, test, free);
 	return (test);
 }
 
@@ -92,6 +84,5 @@ char	**get_command(t_msh *msh, int *i)
 		j++;
 	}
 	cmds[0] = find_right_path(msh, cmds[0]);
-	assert_malloc(msh, cmds[0]);
 	return (cmds);
 }
