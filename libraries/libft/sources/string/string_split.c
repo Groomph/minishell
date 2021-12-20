@@ -6,91 +6,33 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 13:43:54 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 18:00:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:57:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			cleaner(char **tmp, int i)
+static const char	*filltab(char **tmp, const char *str, char c)
 {
-	while (--i >= 0)
-		free(tmp[i]);
-	free(tmp);
-	return (1);
-}
+	int		i;
+	int		i2;
 
-static const char	*filltab(char **tmp, const char *s, char c)
-{
-	int	i;
-	int	i2;
-
+	while (*str && *str == c)
+		str++;
 	i = 0;
-	while (*s && *s == c)
-		s++;
-	while (s[i] && s[i] != c)
+	while (str[i] && str[i] != c)
 		i++;
-	if (!(*tmp = malloc(sizeof(char) * (i + 1))))
+	*tmp = malloc(sizeof(char) * (i + 1));
+	if (!(*tmp))
 		return (NULL);
-	i2 = -1;
-	while (++i2 < i)
-		(*tmp)[i2] = s[i2];
+	i2 = 0;
+	while (i2 < i)
+	{
+		(*tmp)[i2] = str[i2];
+		i2++;
+	}
 	(*tmp)[i2] = '\0';
-	return (&s[i2]);
-}
-
-char				**string_split(char const *s, char c)
-{
-	int		i;
-	int		count;
-	int		check;
-	char	**tmp;
-
-	i = -1;
-	check = 1;
-	count = 0;
-	while (s && s[++i])
-	{
-		if (s[i] == c)
-			check++;
-		else if (check && ++count)
-			check = 0;
-	}
-	if (!(tmp = malloc(sizeof(char*) * (count + 1))))
-		return (NULL);
-	i = -1;
-	while (++i < count)
-		if (!(s = filltab(&tmp[i], s, c)) && cleaner(tmp, i))
-			return (NULL);
-	tmp[count] = NULL;
-	return (tmp);
-}
-
-/*
-BOOL	skip_quote(const char *str, char *quote_t)
-{
-	int		i;
-	BOOL	is_closed;
-
-	if (str[0] != *quote_t && *quote_t != '\0')
-		return (FALSE);
-	if (*quote_t == '\0')
-	{
-		i = 1;
-		is_closed = FALSE;
-		while (str[i] && !is_closed)
-		{
-			if (str[i] == str[0])
-				is_closed = TRUE;
-			i++;
-		}
-		if (!is_closed)
-			return (FALSE);
-		*quote_t = str[0];
-	}
-	else
-		*quote_t = '\0';
-	return (TRUE);
+	return (&(str[i2]));
 }
 
 static int	count_array_size(const char *str, char c)
@@ -98,19 +40,15 @@ static int	count_array_size(const char *str, char c)
 	int		i;
 	int		check;
 	int		count;
-	char	quote_t;
 
 	if (!str)
 		return (0);
 	i = 0;
 	check = 1;
 	count = 0;
-	quote_t = '\0';
 	while (str[i])
 	{
-		if (str[i] == 39 || str[i] == 34)
-			skip_quote(&(str[i]), &quote_t);
-		if (str[i] == c && quote_t == '\0')
+		if (str[i] == c)
 			check++;
 		else if (check)
 		{
@@ -122,28 +60,108 @@ static int	count_array_size(const char *str, char c)
 	return (count);
 }
 
-static const char	*filltab2(char **tmp, const char *str, int max)
+char	**string_split(char const *str, char c)
 {
+	int		array_size;
+	char	**tmp;
 	int		i;
-	int		i2;
-	char	quote_t;
 
+	array_size = count_array_size(str, c);
+	tmp = ft_calloc(array_size + 1, sizeof(char *));
+	if (!tmp)
+		return (NULL);
 	i = 0;
-	i2 = 0;
-	quote_t = '\0';
-	while (i + i2 < max)
+	while (i < array_size)
 	{
-		if ((str[i + i2] != 39 && str[i + i2] != 34)
-			|| !skip_quote(&(str[i + i2]), &quote_t))
+		str = filltab(&(tmp[i]), str, c);
+		if (!str)
 		{
-			(*tmp)[i] = str[i + i2];
-			i++;
+			array_clear((void **) tmp);
+			return (NULL);
 		}
-		else
-			i2++;
+		i++;
 	}
-	(*tmp)[i] = '\0';
-	return (&str[i]);
+	return (tmp);
+}
+
+/*
+   BOOL	skip_quote(const char *str, char *quote_t)
+   {
+   int		i;
+   BOOL	is_closed;
+
+   if (str[0] != *quote_t && *quote_t != '\0')
+   return (FALSE);
+   if (*quote_t == '\0')
+   {
+   i = 1;
+   is_closed = FALSE;
+   while (str[i] && !is_closed)
+   {
+   if (str[i] == str[0])
+   is_closed = TRUE;
+   i++;
+   }
+   if (!is_closed)
+   return (FALSE);
+ *quote_t = str[0];
+ }
+ else
+ *quote_t = '\0';
+ return (TRUE);
+ }
+
+ static int	count_array_size(const char *str, char c)
+ {
+ int		i;
+ int		check;
+ int		count;
+ char	quote_t;
+
+ if (!str)
+ return (0);
+ i = 0;
+ check = 1;
+ count = 0;
+ quote_t = '\0';
+ while (str[i])
+ {
+ if (str[i] == 39 || str[i] == 34)
+ skip_quote(&(str[i]), &quote_t);
+ if (str[i] == c && quote_t == '\0')
+ check++;
+ else if (check)
+ {
+ check = 0;
+ count++;
+ }
+ i++;
+ }
+ return (count);
+ }
+
+ static const char	*filltab2(char **tmp, const char *str, int max)
+ {
+ int		i;
+ int		i2;
+ char	quote_t;
+
+ i = 0;
+ i2 = 0;
+ quote_t = '\0';
+ while (i + i2 < max)
+ {
+ if ((str[i + i2] != 39 && str[i + i2] != 34)
+ || !skip_quote(&(str[i + i2]), &quote_t))
+ {
+ (*tmp)[i] = str[i + i2];
+i++;
+}
+else
+i2++;
+}
+(*tmp)[i] = '\0';
+return (&str[i]);
 }
 
 static const char	*filltab(char **tmp, const char *str, char c)
@@ -160,7 +178,7 @@ static const char	*filltab(char **tmp, const char *str, char c)
 	while (str[i] && (str[i] != c || quote_t != '\0'))
 	{
 		if ((str[i] != 39 && str[i] != 34)
-			|| !skip_quote(&(str[i]), &quote_t))
+				|| !skip_quote(&(str[i]), &quote_t))
 			i2++;
 		i++;
 	}

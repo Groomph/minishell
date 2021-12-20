@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:44:04 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 18:29:37 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:39:00 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ static char	*paths_finder(char **env)
 	return (NULL);
 }
 
-BOOL	get_path(t_msh *msh, char **env)
+BOOL	set_path(t_msh *msh, char **env)
 {
 	char	*verif;
 
 	verif = paths_finder(env);
-	if (verif)
-		msh->paths = string_split(verif, ':');
-	else
+	if (!verif)
 		return (FALSE);
+	msh->paths = string_split(verif, ':');
 	free(verif);
+	if (!(msh->paths))
+		return (FALSE);
 	return (TRUE);
 }

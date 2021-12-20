@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 14:58:41 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:38:45 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ t_vector	*parse_line(t_msh *msh);
 
 // parse_env
 
-BOOL	get_path(t_msh *msh, char **env);
+BOOL	set_path(t_msh *msh, char **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 19:28:14 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:21:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@
 #include <stdio.h> //test
 //#include <signal.h> //test
 
-static void	clean_token(t_msh *msh)
+static void	clear_tmp_data(t_msh *msh)
 {
-	while (msh->tokens.size > 0) 
-	{
-		vector_extract(&(msh->tokens), msh->tokens.size - 1);
-	}
+	gc_flush(&(msh->gc));
+	vector_flush(&(msh->tokens), NULL);
 }
 
 static void	minishell(t_msh *msh, char **env)
@@ -39,7 +37,7 @@ static void	minishell(t_msh *msh, char **env)
 		tokenizer(msh, input);
 		parsed = parse_line(msh);
 		execute(msh, env, parsed->arr[0]);
-		clean_token(msh);
+		clear_tmp_data(msh);
 	}
 }
 
@@ -55,16 +53,17 @@ static BOOL	init_msh(t_msh *msh, char **env)
 		return (FALSE);
 	if (!vector_init(&(msh->history), 10))
 		return (FALSE);
-	if (!get_path(msh, env))
+	if (!set_path(msh, env))
 		return (FALSE);
-//	if (tcgetattr(0, &(msh->term_config)) == -1)
-//		return (FALSE);
+	if (tcgetattr(0, &(msh->term_config)) == -1)
+		return (FALSE);
+/*
 	if (!init_terminal(msh))
 	{
 		perror("init_terminal:");
 		return (FALSE);
 	}
-	return (TRUE);
+*/	return (TRUE);
 }
 
 /*

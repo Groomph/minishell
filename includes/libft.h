@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 17:43:09 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:15:04 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,12 +202,14 @@ t_vector			*vector_new(int size);
 BOOL				vector_init(t_vector *v, int size);
 BOOL				vector_add(t_vector *v, void *data);
 BOOL				vector_extend(t_vector *v);
-void				vector_purge(t_vector *v, void (*f)(void *));
-void				vector_clean(t_vector *v, void (*f)(void *));
+void				*vector_get(t_vector *v, int i);
+t_vector			*vector_extract(t_vector *v, int i);
 void				vector_delone(t_vector *v, int i, void (*f)(void *));
 int					vector_shift_down(t_vector *v, int i);
-t_vector			*vector_extract(t_vector *v, int i);
-void				*vector_get(t_vector *v, int i);
+void				vector_flush(t_vector *v, void (*f)(void *));
+void				vector_purge(t_vector *v, void (*f)(void *));
+void				vector_empty_clear(t_vector *v);
+void				vector_clear(t_vector *v, void (*f)(void *));
 void				vector_arrstr_clean(t_vector *v);
 	
 /*
@@ -226,15 +228,16 @@ t_vecstr			*vecstr_new(int size);
 BOOL				vecstr_init(t_vecstr *v, int size);
 BOOL				vecstr_add(t_vecstr *v, char c);
 BOOL				vecstr_extend(t_vecstr *v);
-void				vecstr_purge(t_vecstr *v);
-void				vecstr_clean(t_vecstr *v);
-void				vecstr_delone(t_vecstr *v, int i, int size);
 BOOL				vecstr_insert(t_vecstr *v, int i, char c);
 BOOL				vecstr_concat(t_vecstr *dest, t_vecstr *src);
 BOOL				vecstr_concat_purge(t_vecstr *dest,
 						t_vecstr *src, BOOL dofree);
-BOOL				vecstr_concat_clean(t_vecstr *dest,
+BOOL				vecstr_concat_clear(t_vecstr *dest,
 						t_vecstr *src, BOOL dofree);
+void				vecstr_delone(t_vecstr *v, int i, int size);
+void				vecstr_flush(t_vecstr *v);
+void				vecstr_purge(t_vecstr *v);
+void				vecstr_clear(t_vecstr *v);
 
 /*
  *******************  GARBAGE COLLECTOR  *******************
@@ -247,6 +250,7 @@ BOOL				vecstr_concat_clean(t_vecstr *dest,
 t_gc				*gc_new(void);
 BOOL				gc_init(t_gc *gc);
 BOOL				gc_add(t_gc *gc, void *data, void (*f)());
+void				gc_flush(t_gc *gc);
 void				gc_purge(t_gc *gc);
 void				gc_clean(t_gc *gc);
 

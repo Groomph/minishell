@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vecstr_clean.c                                     :+:      :+:    :+:   */
+/*   vector_empty_clear.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/13 02:55:04 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:44:03 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/20 12:24:14 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/20 12:37:55 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	vecstr_clean(t_vecstr *v)
+void	vector_empty_clear(t_vector *v)
 {
-	vecstr_purge(v);
+	if (v->arr)
+		free(v->arr);
 	free(v);
 }

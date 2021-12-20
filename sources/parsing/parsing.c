@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 19:32:41 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/20 13:04:14 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vector	*parse_line(t_msh *msh)
 	int		i;
 
 	line = vector_new(3);
-	assert_gc(msh, line, (void *)(void *)vector_arrstr_clean);
+	assert_gc(msh, line, (void *)(void *)vector_empty_clear);
 	i = 0;
 	while (msh->tokens.arr[i])
 	{
@@ -34,7 +34,6 @@ t_vector	*parse_line(t_msh *msh)
 			assert_bool(msh, vector_add(line, msh->tokens.arr[i]));
 			i++;
 		}
-		token = vector_get(line, line->size);
 	}
 	return (line);
 }
@@ -48,20 +47,24 @@ char	*find_right_path(t_msh *msh, char *command)
 	i = 0;
 	str = strjoin("/", command);
 	if (str == NULL)
-		perror(NULL);
+		return (NULL);
 	while (msh->paths[i])
 	{
 		test = strjoin(msh->paths[i], str);
-		if (access(test, X_OK) != 0)
-			free(test);
-		else
+		if (!test)
+		{
+			free(str);
+			return (NULL);
+		}
+		if (access(test, X_OK) == 0)
 			break;
+		free(test);
 		i++;
 	}
 	free(str);
 	if (!msh->paths[i])
 		return (command);
-	free(command);
+	assert_gc(msh, test, free);
 	return (test);
 }
 
@@ -79,9 +82,8 @@ char	**get_command(t_msh *msh, int *i)
 		(*i)++;
 		token = vector_get(&msh->tokens, (*i));
 	}
-	cmds = malloc(sizeof(char *) * ((*i) - j + 1));
-	assert_malloc(msh, cmds);
-	cmds[(*i) - j] = NULL;
+	cmds = ft_calloc((*i) - j + 1, sizeof(char *));
+	assert_gc(msh, cmds, free);
 	k = 0;
 	while (msh->tokens.arr[j] && j < (*i))
 	{
@@ -90,5 +92,6 @@ char	**get_command(t_msh *msh, int *i)
 		j++;
 	}
 	cmds[0] = find_right_path(msh, cmds[0]);
+	assert_malloc(msh, cmds[0]);
 	return (cmds);
 }
