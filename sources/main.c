@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 14:21:58 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:03:24 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ static void	minishell(t_msh *msh, char **env)
 	char	*input;
 	t_vector	*parsed;
 
-	(void)env;
 	while (1)
 	{
 		input = get_input(msh);
-		tokenizer(msh, input);
-		parsed = parse_line(msh);
-		execute(msh, env, parsed->arr[0]);
-		clear_tmp_data(msh);
+		if (input[0] != '\0')
+		{
+			tokenizer(msh, input);
+			parsed = parse_line(msh);
+			execute(msh, env, parsed->arr[0]);
+			clear_tmp_data(msh);
+		}
 	}
 }
 

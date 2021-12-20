@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:34:35 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/19 12:26:29 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:55:53 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_input
 	int			display_size;
 }			t_input;
 
-void		interpret_input(t_msh *msh, t_input *input, char *buf);
+void		interpret_input(t_msh *msh, t_input *input, char *buf, int size);
 BOOL		is_closed_quote(char *txt);
 void		add_to_history(t_msh *msh, t_vecstr *input);
 
@@ -49,7 +49,7 @@ void		move_left(t_vector *history, t_input *input);
 void		move_right(t_vector *history, t_input *input);
 void		delete_char(t_vector *history, t_input *input);
 
-void		insert_char(t_msh *msh, t_input *input, char c);
+void		insert_char(t_msh *msh, t_input *input, char *buf, int size);
 void		backspace(t_input *input);
 
 void		cursor_left(int nb);

@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:28:49 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 14:27:20 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:53:13 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 #include <stdio.h> //test
 
-/*
    static void	print_line_int(char *line, int max)
    {
    int	i;
@@ -29,7 +28,6 @@
    i++;
    }
    }
-   */
 
 /*
    static voidd	isplay_info_input(t_input *input)
@@ -80,7 +78,7 @@ void	readinput(t_msh *msh, t_input *input, char *prompt, int size)
 			size = assert_errno(msh, read(0, buf, 5));
 		buf[size] = '\0';
 		if (buf[0] != '\n')
-			interpret_input(msh, input, buf);
+			interpret_input(msh, input, buf, size);
 	}
 	write(1, "\n", 1);
 }
@@ -117,8 +115,8 @@ char	*get_input(t_msh *msh)
 		complete_input(msh, &input);
 	add_to_history(msh, input.tmp);
 	size = string_len(input.tmp->arr);
-	//	printf("\n\ninput: %s§\nsize: %i\n\n", input.tmp->arr, size);
-	//	print_line_int(input.tmp->arr, size);
+	printf("\n\ninput: %s§\nsize: %i\n\n", input.tmp->arr, size);
+	print_line_int(input.tmp->arr, size);
 	reset_terminal(msh);
 	return (input.tmp->arr);
 }
