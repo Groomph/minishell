@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_delone.c                                    :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 14:14:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 13:27:41 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
+/*   Updated: 2021/12/20 11:38:45 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-void	vector_delone(t_vector *v, int i, void (*f)(void *))
-{
-	if (!v || !(v->arr) || i >= v->size)
-		return ;
-	if (v->arr[i] && f)
-		f(v->arr[i]);
-	v->size = vector_shift_down(v, i);
-}
+# include "minishell.h"
+# include "lexer.h"
+
+
+// parse_command
+
+char	**get_command(t_msh *msh, int *i);
+t_vector	*parse_line(t_msh *msh);
+
+// parse_env
+
+BOOL	set_path(t_msh *msh, char **env);
+
+#endif

@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_delone.c                                    :+:      :+:    :+:   */
+/*   exe.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 14:14:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 13:27:41 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
+/*   Updated: 2021/12/19 18:58:40 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef EXE_H
+# define EXE_H
 
-void	vector_delone(t_vector *v, int i, void (*f)(void *))
-{
-	if (!v || !(v->arr) || i >= v->size)
-		return ;
-	if (v->arr[i] && f)
-		f(v->arr[i]);
-	v->size = vector_shift_down(v, i);
-}
+#include "minishell.h"
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+
+void	execute(t_msh *msh, char **env, char **cmd_full);
+
+# endif

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vecstr_clean.c                                     :+:      :+:    :+:   */
+/*   vecstr_flush.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/13 02:55:04 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:44:03 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/20 14:10:22 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/20 14:12:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	vecstr_clean(t_vecstr *v)
+void	vecstr_flush(t_vecstr *v)
 {
-	vecstr_purge(v);
-	free(v);
+	mem_set(v->arr, 0, v->size);
+	v->size = 0;
 }

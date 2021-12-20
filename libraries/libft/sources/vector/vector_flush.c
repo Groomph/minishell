@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vecstr_extend.c                                    :+:      :+:    :+:   */
+/*   vector_flush.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 22:46:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 14:16:13 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/13 02:54:36 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/20 14:20:27 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-BOOL	vecstr_extend(t_vecstr *v)
+void	vector_flush(t_vector *v, void (*f)(void *))
 {
-	char	*tmp;
-
-	if (v->max == 0)
+	if (!v)
+		return ;
+	if (v->arr)
 	{
-		tmp = ft_calloc(11, sizeof(*(v->arr)));
-		if (!tmp)
-			return (FALSE);
-		v->arr = tmp;
-		v->size = 0;
-		v->max = 10;
-		return (TRUE);
+		while (v->size > 0)
+		{
+			v->size--;
+			if (f)
+				f(v->arr[v->size]);
+			v->arr[v->size] = NULL;
+		}
 	}
-	tmp = ft_calloc(v->max * 2 + 1, sizeof(*(v->arr)));
-	if (!tmp)
-		return (FALSE);
-	mem_copy(tmp, v->arr, sizeof(*(v->arr)) * v->size);
-	free(v->arr);
-	v->arr = tmp;
-	v->max *= 2;
-	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 01:14:04 by romain            #+#    #+#             */
-/*   Updated: 2021/12/13 03:24:46 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:16:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@ BOOL	vector_extend(t_vector *v)
 {
 	void	**tmp;
 
+	if (v->max == 0)
+	{
+		tmp = ft_calloc(4, sizeof(*(v->arr)));
+		if (!tmp)
+			return (FALSE);
+		v->arr = tmp;
+		v->size = 0;
+		v->max = 3;
+		return (TRUE);
+	}
 	tmp = ft_calloc(v->max * 2 + 1, sizeof(*(v->arr)));
 	if (!tmp)
 		return (FALSE);

@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 01:31:32 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 13:32:58 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:57:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 #include "input.h"
 #include <unistd.h>
 
-void	insert_char(t_msh *msh, t_input *input, char c)
+void	insert_unicode(t_msh *msh, t_input *input, char *buf, int size)
 {
-	if (!vecstr_insert(input->tmp, input->i, c))
-		assert_malloc(msh, NULL);
+	(void)msh;
+	(void)input;
+	(void)buf;
+	size++;
+	return ;
+}
+
+void	insert_regular(t_msh *msh, t_input *input, char c)
+{
+	assert_bool(msh, vecstr_insert(input->tmp, input->i, c));
 	write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
 	cursor_left(input->tmp->size - input->i - 1);
 	input->i++;
 	input->display_size++;
+}
+
+void	insert_char(t_msh *msh, t_input *input, char *buf, int size)
+{
+	if (size == 1)
+		insert_regular(msh, input, buf[0]);
+	else
+		insert_unicode(msh, input, buf, size);
 }
 
 void	backspace(t_input *input)

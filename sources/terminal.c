@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:48:27 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 19:52:01 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:16:27 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ BOOL	init_terminal(t_msh *msh)
 {
 	struct termios	config;
 
-	if (tcgetattr(0, &(msh->term_config)) == -1)
-	{
-		return (FALSE);
-	}
+//	if (tcgetattr(0, &(msh->term_config)) == -1)
+//	{
+//		return (FALSE);
+//	}
 	mem_copy(&config, &(msh->term_config), sizeof(msh->term_config));
 	config.c_lflag &= ~(ECHO | ICANON);
 	config.c_cc[VMIN] = 1;

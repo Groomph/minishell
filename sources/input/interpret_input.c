@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 14:00:03 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 19:33:45 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:59:51 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_termcaps(char *input)
 	return (-1);
 }
 
-void	interpret_input(t_msh *msh, t_input *input, char *buf)
+void	interpret_input(t_msh *msh, t_input *input, char *buf, int size)
 {
 	int	termcaps;
 
@@ -77,15 +77,11 @@ void	interpret_input(t_msh *msh, t_input *input, char *buf)
 			printf("UNKNOWN TERMCAPS\n");
 	}
 	else if (buf[0] == 127)
-	{
 		backspace(input);
-	}
 	else if (buf[0] == 4)
-	{
 		exit_program(msh);
-	}
-	else
+	else if (buf[0] != '\t' && buf[0] != 31)
 	{
-		insert_char(msh, input, buf[0]);
+		insert_char(msh, input, buf, size);
 	}
 }
