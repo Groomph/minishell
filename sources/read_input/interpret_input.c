@@ -6,14 +6,14 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 14:00:03 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 16:59:51 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:27:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "input.h"
+#include "libft.h"
+#include "read_input.h"
 
-#include <stdio.h>
+#include <stdio.h>  //test
 
 static const char	g_termcaps[5][5] = {
 [ARROW_UP] = {27, '[', 'A', '\0', '\0'},
@@ -35,9 +35,9 @@ const (static void	(*f[6]))(t_vector *history, t_input *input) =
 };
 */
 
-static void	termcaps_f(int i, t_msh *msh, t_input *input)
+static BOOL	termcaps_f(int i, t_readin *readin, t_input *input)
 {
-	static void	(*f[6])(t_vector *history, t_input *input) = {
+	static BOOL	(*f[6])(t_vector *history, t_input *input) = {
 	[ARROW_UP] = history_up,
 	[ARROW_DOWN] = history_down,
 	[ARROW_LEFT] = move_left,
@@ -46,7 +46,7 @@ static void	termcaps_f(int i, t_msh *msh, t_input *input)
 		NULL
 	};
 
-	f[i](&(msh->history), input);
+	return (f[i](&(readin->history), input));
 }
 
 int	get_termcaps(char *input)
@@ -64,7 +64,7 @@ int	get_termcaps(char *input)
 	return (-1);
 }
 
-void	interpret_input(t_msh *msh, t_input *input, char *buf, int size)
+BOOL	interpret_input(t_readin *readin, t_input *input, char *buf, int size)
 {
 	int	termcaps;
 
@@ -72,16 +72,19 @@ void	interpret_input(t_msh *msh, t_input *input, char *buf, int size)
 	{
 		termcaps = get_termcaps(buf);
 		if (termcaps != -1)
-			termcaps_f(termcaps, msh, input);
+		{
+			if (!termcaps_f(termcaps, readin, input))
+				return (FALSE);
+		}
 		else
 			printf("UNKNOWN TERMCAPS\n");
 	}
 	else if (buf[0] == 127)
 		backspace(input);
-	else if (buf[0] == 4)
-		exit_program(msh);
 	else if (buf[0] != '\t' && buf[0] != 31)
 	{
-		insert_char(msh, input, buf, size);
+		if (!insert_char(input, buf, size))
+			return (FALSE);
 	}
+	return (TRUE);
 }

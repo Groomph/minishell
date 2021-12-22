@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 21:00:06 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 14:23:15 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:14:27 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ void	display_gc(t_gc *gc)
 void	exit_program(t_msh *msh)
 {
 	gc_purge(&(msh->gc));
-	gc_purge(&(msh->hist_gc));
 	vector_purge(&(msh->tokens), NULL);
-	vector_purge(&(msh->history), NULL);
 	array_clear((void **)msh->paths);
-	if (!(reset_terminal(msh)))
-		perror("reset_terminal:");
+	clear_readinput(&(msh->readin));
 	exit(1);
 }

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_duplicate.c                                 :+:      :+:    :+:   */
+/*   vecstr_newfromstr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 15:03:26 by romain            #+#    #+#             */
-/*   Updated: 2021/12/21 16:46:52 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/15 22:46:34 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/21 18:39:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*string_duplicate(const char *original, int size)
+t_vecstr	*vecstr_newfromstr(char *str)
 {
-	int		i;
-	char	*new;
+	int			size;
+	t_vecstr	*new;
 
-	i = 0;
-	if (size <= 0)
-		size = string_len(original);
-	new = malloc(sizeof(char) * (size + 1));
+	size = string_len(str);
+	new = vecstr_new(size + 1);
 	if (!new)
 		return (NULL);
-	mem_copy(new, original, size);
-	new[size] = '\0';
+	mem_copy(new->arr, str, size);
+	new->arr[size] = '\0';
+	new->size = size;
 	return (new);
 }

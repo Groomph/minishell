@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor.c                                           :+:      :+:    :+:   */
+/*   vecstr_duplicate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 18:02:18 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 19:26:34 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/15 22:46:34 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/21 18:39:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-void	cursor_left(int nb)
+t_vecstr	*vecstr_duplicate(t_vecstr *v)
 {
-	int	i;
+	t_vecstr	*new;
 
-	i = 0;
-	while (i < nb)
-	{
-		write(1, "\033[1D", 4);
-		i++;
-	}
-}
-
-void	cursor_right(int nb)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb)
-	{
-		write(1, "\033[1C", 4);
-		i++;
-	}
+	new = vecstr_new(v->max);
+	if (!new)
+		return (NULL);
+	mem_copy(new->arr, v->arr, v->size);
+	new->size = v->size;
+	new->arr[new->size] = '\0';
+	return (new);
 }

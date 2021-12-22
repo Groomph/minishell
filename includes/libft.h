@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 14:15:04 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:22:22 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,8 @@ void				vector_arrstr_clean(t_vector *v);
 
 t_vecstr			*vecstr_new(int size);
 BOOL				vecstr_init(t_vecstr *v, int size);
+t_vecstr			*vecstr_newfromstr(char *str);
+t_vecstr			*vecstr_duplicate(t_vecstr *v);
 BOOL				vecstr_add(t_vecstr *v, char c);
 BOOL				vecstr_extend(t_vecstr *v);
 BOOL				vecstr_insert(t_vecstr *v, int i, char c);
@@ -260,6 +262,6 @@ void				gc_clean(t_gc *gc);
 
 int					get_next_line(int fd, char **buffer,
 						char **line, BOOL *eof);
-char				*read_input(char *prompt, int size);
+//char				*read_input(char *prompt, int size);
 
 #endif

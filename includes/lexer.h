@@ -6,13 +6,14 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 14:17:42 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/22 18:18:31 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
+# include "minishell.h"
 # include "libft.h"
 # include <termios.h>
 
@@ -35,9 +36,10 @@ enum	e_token_type
 	TOK_NB
 };
 
-int			get_token(char *input);
+void		tokenizer(t_msh *msh, char *input);
+int		get_token(char *input);
 
-int			get_char_type(int c);
+int			get_char_type(unsigned char c);
 int			get_token_type(int char_type);
 BOOL		is_allowed(int char_type, int token_type);
 
