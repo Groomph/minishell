@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 17:45:46 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:27:25 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	fork_loop(char **env, t_command *s_cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("prout\n");
 		execve(s_cmd->name, s_cmd->args, env);
 		printf("command not existing\n");
 		exit(0);
@@ -42,7 +41,7 @@ void    execute(t_msh *msh, char **env, t_vector *v_cmd)
 			fork_loop(env, (t_command *)v_cmd->arr[i]);
 		i++;
 	}
-        return;
+        return ;
 }
 
 /*

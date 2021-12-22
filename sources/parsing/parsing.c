@@ -6,12 +6,13 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 17:38:06 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:39:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include "redirect.h"
 #include "stdio.h"
 #include "unistd.h"
 
@@ -38,44 +39,6 @@ t_vector	*parse_line(t_msh *msh)
 		}
 	}
 	return (line);
-}
-
-// gestion du >
-static void	redirection_out(char *name_file)
-{
-	(void)name_file;
-}
-
-// gestion du >>
-static void	redirection_out_2(char *name_file)
-{
-	(void)name_file;
-}
-
-static void	(*red_dest(char *operator))(char *name_file)
-{
-	if (operator[1] == 0)
-		return (redirection_out);
-	return (redirection_out_2);
-}
-
-// gestion du <
-static void	redirection_in(char *name_file)
-{
-	(void)name_file;
-}
-
-//gestion du <<
-static void	redirection_in_2(char *name_file)
-{
-	(void)name_file;
-}
-
-static void	(*red_origin(char *operator))(char *name_file)
-{
-	if (operator[1] == 0)
-		return (redirection_in);
-	return (redirection_in_2);
 }
 
 static t_command	*init_command(t_msh *msh, char **l_cmd)

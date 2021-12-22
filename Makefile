@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/22 15:54:17 by aldamien         ###   ########.fr        #
+#    Updated: 2021/12/22 19:40:57 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ PARSER = parsing
 
 EXE = exe
 
+INOUT = redirect
+
 DIR_O = temporary
 
 SOURCES = main.c error.c exit.c terminal.c \
@@ -47,9 +49,10 @@ SOURCES = main.c error.c exit.c terminal.c \
 	  $(EVENT)/event_simple.c $(EVENT)/event_termcaps.c \
 	  $(DISP)/cursor.c $(DISP)/input_display.c \
 	  $(HIST)/history.c \
-	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c\
-	  $(PARSER)/parsing.c $(PARSER)/path.c $(PARSER)/syntax.c\
-	  $(EXE)/exe.c
+	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c \
+	  $(PARSER)/parsing.c $(PARSER)/path.c $(PARSER)/syntax.c \
+	  $(EXE)/exe.c \
+	  $(INOUT)/redirect_in.c $(INOUT)/redirect_out.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
@@ -76,6 +79,7 @@ $(DIR_O)/%.o: $(DIR_S)/%.c
 	@mkdir -p $(DIR_O)/$(LEXER)
 	@mkdir -p $(DIR_O)/$(PARSER)
 	@mkdir -p $(DIR_O)/$(EXE)
+	@mkdir -p $(DIR_O)/$(INOUT)
 	$(CC) $(CFLAGS) -I $(HEADER) -o $@ -c $<
 
 norme:
