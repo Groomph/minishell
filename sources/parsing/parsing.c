@@ -6,12 +6,13 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/20 14:44:40 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:39:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include "redirect.h"
 #include "stdio.h"
 #include "unistd.h"
 
@@ -24,10 +25,12 @@ t_vector	*parse_line(t_msh *msh)
 	line = vector_new(3);
 	assert_gc(msh, line, (void *)(void *)vector_empty_clear);
 	i = 0;
+	if (check_syntax(msh) == 0)
+		return (NULL);
 	while (msh->tokens.arr[i])
 	{
 		token = vector_get(&msh->tokens, i);
-		if (get_char_type(token[0]) != OPERATOR)
+		if (token[0] != '|')
 			assert_bool(msh, vector_add(line, get_command(msh, &i)));
 		else
 		{
@@ -38,30 +41,63 @@ t_vector	*parse_line(t_msh *msh)
 	return (line);
 }
 
-char	*find_right_path(t_msh *msh, char *command)
+static t_command	*init_command(t_msh *msh, char **l_cmd)
 {
 	int	i;
-	char	*str;
-	char	*test;
+	t_command	*s_cmd;
 
+	s_cmd = malloc(sizeof(t_command));
+	assert_gc(msh, s_cmd, free);
 	i = 0;
-	str = strjoin("/", command);
-	assert_gc(msh, str, free);
-	while (msh->paths[i])
+	mem_set(s_cmd, 0, sizeof(t_command));
+	s_cmd->args = l_cmd;
+	while (l_cmd[i])
 	{
-		test = strjoin(msh->paths[i], str);
-		assert_gc(msh, test, free);
-		if (access(test, X_OK) == 0)
-			break;
-		i++;
+		if (l_cmd[i + 1] && l_cmd[i + 1][0] == '<')
+		{
+			s_cmd->origin = l_cmd[i];
+			s_cmd->red_in = red_origin(l_cmd[i + 1]);
+			i += 2;
+		}
+		else if (l_cmd[i][0] == '>')
+		{
+			s_cmd->dest = l_cmd[i + 1];
+			s_cmd->red_out = red_dest(l_cmd[i]);
+			i += 2;
+		}
+		else
+		{
+			if (s_cmd->name == NULL)
+				s_cmd->name = find_right_path(msh, l_cmd[i]);
+			l_cmd[0] = l_cmd[i];
+			l_cmd++;
+		}
 	}
-	if (!msh->paths[i])
-		return (command);
-	return (test);
+	l_cmd[0] = NULL;
+	return (s_cmd);
 }
 
-char	**get_command(t_msh *msh, int *i)
+void		debug_s_cmd(t_command *s_cmd)
 {
+	int	i;
+
+	i = 0;
+	printf("name = ''%s''\n", s_cmd->name);
+	printf("args\n");
+	while (s_cmd->args[i])
+	{
+		printf("args %d = ''%s''\n", i, s_cmd->args[i]);
+		i++;
+	}
+	printf("red_in = %p\n", s_cmd->red_in);
+	printf("origin = ''%s''\n", s_cmd->origin);
+	printf("red_out = %p\n", s_cmd->red_out);
+	printf("dest = ''%s''\n", s_cmd->dest);
+}
+
+t_command	*get_command(t_msh *msh, int *i)
+{
+	t_command	*s_cmd;
 	char	**cmds;
 	char	*token;
 	int	j;
@@ -69,7 +105,7 @@ char	**get_command(t_msh *msh, int *i)
 
 	j = (*i);
 	token = vector_get(&msh->tokens, (*i));
-	while (token && get_char_type(token[0]) != OPERATOR)
+	while (token && token[0] != '|')
 	{
 		(*i)++;
 		token = vector_get(&msh->tokens, (*i));
@@ -83,6 +119,7 @@ char	**get_command(t_msh *msh, int *i)
 		k++;
 		j++;
 	}
-	cmds[0] = find_right_path(msh, cmds[0]);
-	return (cmds);
+	s_cmd = init_command(msh, cmds);
+//	debug_s_cmd(s_cmd);
+	return (s_cmd);
 }
