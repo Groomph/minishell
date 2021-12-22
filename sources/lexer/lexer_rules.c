@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 18:17:38 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:52:56 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,11 @@ int	get_char_type(unsigned char c)
 	if (c >= 0x80)
 		return (CHARACTER);
 	return (g_char_type[c]);
+}
+
+int	fast_token_type(unsigned char c)
+{
+	return (g_token_type[get_char_type(c)]);
 }
 
 int	get_token_type(int char_type)

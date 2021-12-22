@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 16:33:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:53:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	minishell(t_msh *msh, char **env)
 		{
 			tokenizer(msh, input);
 			parsed = parse_line(msh);
-			printf("coucou\n");
 			execute(msh, env, parsed->arr[0]);
 			clear_tmp_data(msh);
 		}
