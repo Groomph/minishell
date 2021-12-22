@@ -6,41 +6,36 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:09:38 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 22:00:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:41:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <input.h>
+#include "read_input.h"
+#include <stdio.h>
 
-int	is_present(t_vector *history, t_vecstr *input)
+void	add_history(t_readin *readin, char *input)
 {
-	int	i;
+	t_vecstr	*last;
+	t_vector	*hist;
+	t_vecstr	*new;
 
-	i = 0;
-	while (i < history->size)
+	hist = &(readin->history);
+	if (hist->size > 0)
 	{
-		if (input == history->arr[i])
-			return (i);
-		i++;
+		last = hist->arr[hist->size - 1];
+		if (str_n_comp(last->arr, input, last->size + 1) == 0)
+			return ;
 	}
-	return (-1);
-}
-
-void	add_to_history(t_msh *msh, t_vecstr *input)
-{
-	int			i;
-	t_vector	*tmp;
-
-	if (input->size > 0)
+	new = vecstr_newfromstr(input);
+	if (!new)
 	{
-		i = is_present(&(msh->history), input);
-		if (i == -1)
-			assert_bool(msh, vector_add(&(msh->history), input));
-		else
-		{
-			tmp = vector_extract(&(msh->history), i);
-			assert_malloc(msh, tmp);
-			assert_bool(msh, vector_add(&(msh->history), tmp));
-		}	
+		perror("add_readin: ");
+		return ;
+	}
+	if (!vector_add(hist, new))
+	{
+		vecstr_clear(new);
+		perror("add_readin: ");
+		return ;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/22 19:40:57 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/22 20:12:11 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = minishell
 
 CC = clang
 
-CFLAGS = -Wall -Wextra -Werror #--analyze
+CFLAGS = -Wall -Wextra -Werror
+
+#CFLAGS = --analyze
 
 FLAGSHARD = -Weverything
 
@@ -26,7 +28,7 @@ HEADER = includes
 
 DIR_S = sources
 
-INPUT = input
+INPUT = read_input
 
 EVENT = $(INPUT)/event
 
@@ -44,9 +46,12 @@ INOUT = redirect
 
 DIR_O = temporary
 
-SOURCES = main.c error.c exit.c terminal.c \
-	  $(INPUT)/get_input.c $(INPUT)/quote.c $(INPUT)/interpret_input.c \
+SOURCES = main.c error.c exit.c get_input.c \
+	  $(INPUT)/read_input.c $(INPUT)/interpret_input.c \
+	  $(INPUT)/terminal.c $(INPUT)/init_clear.c \
+	  $(INPUT)/signal.c \
 	  $(EVENT)/event_simple.c $(EVENT)/event_termcaps.c \
+	  $(EVENT)/event_history.c $(EVENT)/utils.c \
 	  $(DISP)/cursor.c $(DISP)/input_display.c \
 	  $(HIST)/history.c \
 	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c \
@@ -64,7 +69,7 @@ bonus: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIB)/libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) -ltermcap $(OBJS) $(LIBFT)
 
 $(NAMEB): $(OBJSB)
 	make -C $(LIB)/libft

@@ -6,18 +6,18 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 19:24:10 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/22 20:11:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "read_input.h"
+#include "lexer.h"
 #include "parsing.h"
 #include "exe.h"
-#include <unistd.h>
 
 #include <stdio.h> //test
-//#include <signal.h> //test
 
 static void	clear_tmp_data(t_msh *msh)
 {
@@ -27,13 +27,15 @@ static void	clear_tmp_data(t_msh *msh)
 
 static void	minishell(t_msh *msh, char **env)
 {
-	char	*input;
+	char		*input;
 	t_vector	*parsed;
 
 	while (1)
 	{
 		input = get_input(msh);
-		if (input[0] != '\0')
+		if (!input)
+			exit_program(msh);
+		if (input[0])
 		{
 			tokenizer(msh, input);
 			parsed = parse_line(msh);
@@ -44,9 +46,6 @@ static void	minishell(t_msh *msh, char **env)
 	}
 }
 
-//	assert_gc(msh, &(msh->tokens), (void *)(void *)vector_purge);
-//	assert_gc(msh, &(msh->history), (void *)(void *)vector_purge);
-
 static BOOL	init_msh(t_msh *msh, char **env)
 {
 	mem_set(msh, 0, sizeof(*msh));
@@ -54,27 +53,12 @@ static BOOL	init_msh(t_msh *msh, char **env)
 		return (FALSE);
 	if (!vector_init(&(msh->tokens), 10))
 		return (FALSE);
-	if (!vector_init(&(msh->history), 10))
+	if (!init_readinput(&(msh->readin)))
 		return (FALSE);
 	if (!set_path(msh, env))
 		return (FALSE);
-	if (tcgetattr(0, &(msh->term_config)) == -1)
-		return (FALSE);
-/*
-	if (!init_terminal(msh))
-	{
-		perror("init_terminal:");
-		return (FALSE);
-	}
-*/	return (TRUE);
+	return (TRUE);
 }
-
-/*
-	struct sigaction sig;
-
-	sig.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sig, NULL);
-*/
 
 int	main(int ac, char **av, char **env)
 {

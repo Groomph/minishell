@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 12:07:56 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/21 20:40:02 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "lexer.h"
 
-int	specific_rules(char *input, int token_type, int i)
+static int	specific_rules(char *input, int token_type, int i)
 {
 	if (token_type == TOK_QUOTED_STR || token_type == TOK_WORD)
 	{

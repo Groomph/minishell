@@ -6,54 +6,62 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 01:31:32 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/20 16:57:36 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:21:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "input.h"
-#include <unistd.h>
+#include "libft.h"
+#include "read_input.h"
 
-void	insert_unicode(t_msh *msh, t_input *input, char *buf, int size)
+static BOOL	insert_unicode(t_input *input, char *buf, int size)
 {
-	(void)msh;
-	(void)input;
-	(void)buf;
-	size++;
-	return ;
-}
+	int	i;
 
-void	insert_regular(t_msh *msh, t_input *input, char c)
-{
-	assert_bool(msh, vecstr_insert(input->tmp, input->i, c));
-	write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
-	cursor_left(input->tmp->size - input->i - 1);
-	input->i++;
+	i = size;
+	while (i > 0)
+	{
+		i--;
+		if (!vecstr_insert(input->focus, input->i, buf[i]))
+			return (FALSE);
+	}
 	input->display_size++;
+	refresh_from_position(input, input->i);
+	input->i += size;
+	input->display_i++;
+	return (TRUE);
 }
 
-void	insert_char(t_msh *msh, t_input *input, char *buf, int size)
+static BOOL	insert_regular(t_input *input, char c)
+{
+	if (!vecstr_insert(input->focus, input->i, c))
+		return (FALSE);
+	input->display_size++;
+	refresh_from_position(input, input->i);
+	input->i++;
+	input->display_i++;
+	return (TRUE);
+}
+
+BOOL	insert_char(t_input *input, char *buf, int size)
 {
 	if (size == 1)
-		insert_regular(msh, input, buf[0]);
+		return (insert_regular(input, buf[0]));
 	else
-		insert_unicode(msh, input, buf, size);
+		return (insert_unicode(input, buf, size));
 }
 
 void	backspace(t_input *input)
 {
+	int	size;
+
 	if (input->i > 0)
 	{
-		input->i--;
+		size = get_utf_dist(input->focus->arr, input->i);
+		input->i -= size;
+		vecstr_delone(input->focus, input->i, size);
 		cursor_left(1);
-		vecstr_delone(input->tmp, input->i, 1);
+		input->display_i--;
 		refresh_deleted(input);
+		input->display_size--;
 	}
 }
-
-/*
-		write(1, &(input->tmp->arr[input->i]), input->tmp->size - input->i);
-                write(1, " ", 1);
-                cursor_left(input->tmp->size - input->i + 1);
-                input->display_size--;
-*/

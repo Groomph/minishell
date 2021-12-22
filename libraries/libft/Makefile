@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/20 14:16:50 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/21 18:40:01 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,9 +82,11 @@ SOURCES	= valeur_absolue.c optimized_msleep.c \
 	  $(VECTOR)/vector_flush.c $(VECTOR)/vector_purge.c \
 	  $(VECTOR)/vector_clear.c $(VECTOR)/vector_empty_clear.c \
 	  $(VECSTR)/vecstr_new.c $(VECSTR)/vecstr_init.c \
-	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_extend.c \
-	  $(VECSTR)/vecstr_delone.c $(VECSTR)/vecstr_insert.c \
-	  $(VECSTR)/vecstr_concat.c $(VECSTR)/vecstr_flush.c \
+	  $(VECSTR)/vecstr_newfromstr.c \
+	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_insert.c \
+	  $(VECSTR)/vecstr_extend.c $(VECSTR)/vecstr_concat.c \
+	  $(VECSTR)/vecstr_duplicate.c $(VECSTR)/vecstr_delone.c \
+	  $(VECSTR)/vecstr_flush.c \
 	  $(VECSTR)/vecstr_purge.c $(VECSTR)/vecstr_clear.c \
 	  $(GC)/gc_new.c $(GC)/gc_init.c \
 	  $(GC)/gc_add.c $(GC)/gc_flush.c \

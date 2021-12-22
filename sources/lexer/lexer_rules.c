@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 13:59:27 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:52:56 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,11 +239,16 @@ BOOL	get_token_rules(int token_type, char c)
  * type 2 (word) = contain caracter, numbers and not operator symbol
  */
 
-int	get_char_type(int c)
+int	get_char_type(unsigned char c)
 {
-	if (c < 0 || c > 127)
-		return (IGNORE);
+	if (c >= 0x80)
+		return (CHARACTER);
 	return (g_char_type[c]);
+}
+
+int	fast_token_type(unsigned char c)
+{
+	return (g_token_type[get_char_type(c)]);
 }
 
 int	get_token_type(int char_type)
