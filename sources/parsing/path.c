@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:44:04 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/20 11:39:00 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/22 14:02:01 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,26 @@ BOOL	set_path(t_msh *msh, char **env)
 		return (FALSE);
 	return (TRUE);
 }
+
+char	*find_right_path(t_msh *msh, char *command)
+{
+	int	i;
+	char	*str;
+	char	*test;
+
+	i = 0;
+	str = strjoin("/", command);
+	assert_gc(msh, str, free);
+	while (msh->paths[i])
+	{
+		test = strjoin(msh->paths[i], str);
+		assert_gc(msh, test, free);
+		if (access(test, X_OK) == 0)
+			break;
+		i++;
+	}
+	if (!msh->paths[i])
+		return (command);
+	return (test);
+}
+

@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/19 18:58:40 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:36:05 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	execute(t_msh *msh, char **env, char **cmd_full);
+void	execute(t_msh *msh, char **env, t_vector *v_cmd);
 
 # endif
