@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:54:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/17 21:19:03 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:38:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ BOOL	vecstr_concat_purge(t_vecstr *dest, t_vecstr *src, BOOL dofree)
 	return (check);
 }
 
-BOOL	vecstr_concat_clean(t_vecstr *dest, t_vecstr *src, BOOL dofree)
+BOOL	vecstr_concat_clear(t_vecstr *dest, t_vecstr *src, BOOL dofree)
 {
 	BOOL	check;
 
 	check = vecstr_concat(dest, src);
 	if (src && dofree)
-		vecstr_clean(src);
+		vecstr_clear(src);
 	return (check);
 }

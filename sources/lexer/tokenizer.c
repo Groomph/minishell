@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 14:00:32 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:40:02 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "lexer.h"
 
-int	specific_rules(char *input, int token_type, int i)
+static int	specific_rules(char *input, int token_type, int i)
 {
 	if (token_type == TOK_QUOTED_STR || token_type == TOK_WORD)
 	{
@@ -57,7 +57,8 @@ void	tokenizer(t_msh *msh, char *input)
 		i = get_token(input);
 		if (i > 0)
 		{
-			token = assert_gc(msh, substr(input, 0, i), free);
+			token = substr(input, 0, i);
+			token = assert_gc(msh, token, free);
 			assert_bool(msh, vector_add(&(msh->tokens), token));
 			input += i;
 		}

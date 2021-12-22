@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/17 19:23:01 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/21 18:40:01 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,17 +77,20 @@ SOURCES	= valeur_absolue.c optimized_msleep.c \
 	  $(LIST2)/lst2_getsecondlast.c $(LIST2)/lst2_duplicate.c \
 	  $(VECTOR)/vector_new.c $(VECTOR)/vector_init.c \
 	  $(VECTOR)/vector_add.c $(VECTOR)/vector_extend.c \
-	  $(VECTOR)/vector_purge.c $(VECTOR)/vector_clean.c \
+	  $(VECTOR)/vector_get.c $(VECTOR)/vector_extract.c \
 	  $(VECTOR)/vector_delone.c $(VECTOR)/vector_shift_down.c \
-	  $(VECTOR)/vector_extract.c \
+	  $(VECTOR)/vector_flush.c $(VECTOR)/vector_purge.c \
+	  $(VECTOR)/vector_clear.c $(VECTOR)/vector_empty_clear.c \
 	  $(VECSTR)/vecstr_new.c $(VECSTR)/vecstr_init.c \
-	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_extend.c \
-	  $(VECSTR)/vecstr_purge.c $(VECSTR)/vecstr_clean.c \
-	  $(VECSTR)/vecstr_delone.c $(VECSTR)/vecstr_insert.c \
-	  $(VECSTR)/vecstr_concat.c \
+	  $(VECSTR)/vecstr_newfromstr.c \
+	  $(VECSTR)/vecstr_add.c $(VECSTR)/vecstr_insert.c \
+	  $(VECSTR)/vecstr_extend.c $(VECSTR)/vecstr_concat.c \
+	  $(VECSTR)/vecstr_duplicate.c $(VECSTR)/vecstr_delone.c \
+	  $(VECSTR)/vecstr_flush.c \
+	  $(VECSTR)/vecstr_purge.c $(VECSTR)/vecstr_clear.c \
 	  $(GC)/gc_new.c $(GC)/gc_init.c \
-	  $(GC)/gc_add.c \
-	  $(GC)/gc_purge.c $(GC)/gc_clean.c \
+	  $(GC)/gc_add.c $(GC)/gc_flush.c \
+	  $(GC)/gc_purge.c $(GC)/gc_clear.c \
 	  ${FD}/get_next_line.c ${FD}/read_input.c \
 	  $(PARSER)/parser_atoui.c \
 	  $(DISPLAY)/buffer.c $(DISPLAY)/buffer_conversion.c
