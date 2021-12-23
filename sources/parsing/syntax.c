@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:08:54 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 16:40:45 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:51:22 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ BOOL	syntax_operator(char **tokens, int *i)
 {
 	if (!is_operator_valid(tokens[*i]))
 		return (0);
-	if (tokens[0][0] == '|' || tokens[1] == NULL)
+	if ((tokens[0][0] == '|' || tokens[1] == NULL)
+		|| (*i == 0 && tokens[*i][0] == '<'))
+	{
+		printf("syntax error : unexepected token near operator.\n");
+		return (0);
+	}
 		return (0);
 	if (tokens[*i][0] == '<' && get_char_type(tokens[(*i) - 1][0]) != OPERATOR)
 		return (1);
@@ -54,7 +59,6 @@ int	check_syntax(t_msh *msh)
 	{
 		if (get_char_type(tokens[i][0]) == OPERATOR && !(syntax_operator(tokens, &i)))
 		{
-			printf("test bien chiant\n");
 			return (0);
 		}
 /*		else if (get_char_type(tokens[i][0]) == CHARACTER && !syntax_word(tokens, i))

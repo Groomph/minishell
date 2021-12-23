@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 19:27:25 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:39:01 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	fork_loop(char **env, t_command *s_cmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (s_cmd->dest)
+			s_cmd->red_out(s_cmd->dest);
+		if (s_cmd->origin)
+			s_cmd->red_in(s_cmd->origin);
 		execve(s_cmd->name, s_cmd->args, env);
 		printf("command not existing\n");
 		exit(0);
