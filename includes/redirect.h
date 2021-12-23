@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 19:34:20 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/23 14:01:03 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/23 19:48:13 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "minishell.h"
 
-void	(*red_origin(char *operator))(char *name_file);
+void	(*red_origin(char *operator))(t_msh *msh, char *name_file);
 void	(*red_dest(char *operator))(char *name_file);
 
 # endif
