@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:08:54 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/23 15:51:22 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:36:15 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ BOOL	is_operator_valid(char *token)
 
 BOOL	syntax_operator(char **tokens, int *i)
 {
-	if (!is_operator_valid(tokens[*i]))
-		return (0);
-	if ((tokens[0][0] == '|' || tokens[1] == NULL)
-		|| (*i == 0 && tokens[*i][0] == '<'))
+	if (tokens[0][0] == '|')
 	{
 		printf("syntax error : unexepected token near operator.\n");
 		return (0);
 	}
+	if (!is_operator_valid(tokens[*i]))
 		return (0);
-	if (tokens[*i][0] == '<' && get_char_type(tokens[(*i) - 1][0]) != OPERATOR)
+	if (tokens[(*i) + 1] == NULL) 
+	{
+		printf("syntax error : unexepected token near operator.\n");
+		return (0);
+	}
+	if (tokens[*i][0] == '<'
+			&& get_char_type(tokens[(*i) + 1][0]) != OPERATOR)
 		return (1);
-	if (tokens[*i][0] == '>' && get_char_type(tokens[(*i) + 1][0]) != OPERATOR)
-		return (1);
-	if (tokens[*i][0] == '|' && tokens[*i][1] == 0)
+	if (tokens[*i][0] == '>'
+			&& get_char_type(tokens[(*i) + 1][0]) != OPERATOR)
 		return (1);
 	printf("syntax error : unexpected token near operator.\n");
 	return (0);

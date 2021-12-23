@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 19:39:05 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:37:51 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static t_command	*init_command(t_msh *msh, char **l_cmd)
 	s_cmd->args = l_cmd;
 	while (l_cmd[i])
 	{
-		if (l_cmd[i + 1] && l_cmd[i + 1][0] == '<')
+		if (l_cmd[i][0] == '<')
 		{
-			s_cmd->origin = l_cmd[i];
-			s_cmd->red_in = red_origin(l_cmd[i + 1]);
+			s_cmd->origin = l_cmd[i + 1];
+			s_cmd->red_in = red_origin(l_cmd[i]);
 			i += 2;
 		}
 		else if (l_cmd[i][0] == '>')
