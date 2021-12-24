@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 19:33:24 by romain            #+#    #+#             */
-/*   Updated: 2021/12/23 19:48:27 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/24 11:49:07 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ static void	creating_heredoc(t_msh *msh, int fd, char *end)
 
 	len = string_len(end) + 1;
 	input = read_input(&msh->readin, "> ", 2);
+	printf("%s\n", input);
 	while (str_n_comp(input, end, len) != 0)
 	{
 		write(fd, input, string_len(input));
 		write(fd, "\n", 1);
 		free(input);
 		input = read_input(&msh->readin, "> ", 2);
+		printf("%s\n", input);
 	}
 	free(input);
+	close(fd);
 }
 
 //gestion du <<
@@ -64,6 +67,12 @@ static void     redirection_in_2(t_msh *msh, char *end)
                 return ;
         }
 	creating_heredoc(msh, fd, end);
+	fd = open(".heredoc", O_RDONLY);
+	if (fd == -1)
+        {
+                perror("unable to open redirection file : ");
+                return ;
+        }
         if(unlink(".heredoc") == -1)
 	{
 		perror("redirection failure : ");

@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 17:34:39 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/24 11:37:11 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_command
 {
 	char	*name;
 	char	**args;
-	void	(*red_in)(char *);
+	void	(*red_in)(t_msh *msh, char *);
 	char	*origin;
 	void	(*red_out)(char *);
 	char	*dest;
