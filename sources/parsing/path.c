@@ -6,11 +6,13 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:44:04 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 14:02:01 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:26:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
+#include "libft.h"
+#include <unistd.h>
 
 static char	*paths_finder(char **env)
 {
@@ -42,7 +44,7 @@ BOOL	set_path(t_msh *msh, char **env)
 
 char	*find_right_path(t_msh *msh, char *command)
 {
-	int	i;
+	int		i;
 	char	*str;
 	char	*test;
 
@@ -54,11 +56,10 @@ char	*find_right_path(t_msh *msh, char *command)
 		test = strjoin(msh->paths[i], str);
 		assert_gc(msh, test, free);
 		if (access(test, X_OK) == 0)
-			break;
+			break ;
 		i++;
 	}
 	if (!msh->paths[i])
 		return (command);
 	return (test);
 }
-

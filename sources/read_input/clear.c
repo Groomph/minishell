@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.h                                         :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 19:34:20 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 11:31:18 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/21 18:47:34 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/24 16:15:15 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REDIRECT_H
-# define REDIRECT_H
+#include "read_input.h"
+#include <stdlib.h>
 
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
-# include "minishell.h"
+void	clear_readinput(t_readin *readin)
+{
+	gc_purge(&(readin->gc));
+	vector_purge(&(readin->history), (void *)(void *) vecstr_clear);
+}
 
-void	(*red_origin(char *operator))(char *name_file);
-void	(*red_dest(char *operator))(char *name_file);
-
-#endif
+void	clear_input(t_input *input)
+{
+	if (input->in == input->focus)
+	{
+		free(input->in);
+	}
+	else
+	{
+		vecstr_clear(input->in);
+		free(input->focus);
+	}
+}

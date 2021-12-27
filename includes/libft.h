@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/21 19:22:22 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/27 11:21:46 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/27 11:21:49 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ size_t				string_len(const char *s);
 char				**string_split(const char *str, char c);
 int					shift_right_add(char *str, int i, char c);
 int					shift_left_erase(char *str, int i, int dist);
+int					str_comp(const char *str, const char *str2);
 int					str_n_comp(const char *str, const char *str2, int stop);
 char				*str_nstr_comp(char *str1, char *str2, size_t size_str2);
 char				*string_duplicate(const char *original, int size);

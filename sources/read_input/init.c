@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_clear.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 18:47:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 18:31:29 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/24 16:14:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #include "read_input.h"
 #include <stdio.h>
 #include <termios.h>
-
-void	clear_readinput(t_readin *readin)
-{
-	gc_purge(&(readin->gc));
-	vector_purge(&(readin->history), (void *)(void *) vecstr_clear);
-}
 
 BOOL	init_readinput(t_readin *readin)
 {
@@ -39,21 +33,8 @@ BOOL	init_readinput(t_readin *readin)
 		perror("init read_input: ");
 		return (FALSE);
 	}
-	readin->eol = 0;
+	readin->state = 0;
 	return (TRUE);
-}
-
-void	clear_input(t_input *input)
-{
-	if (input->in == input->focus)
-	{
-		free(input->in);
-	}
-	else
-	{
-		vecstr_clear(input->in);
-		free(input->focus);
-	}
 }
 
 BOOL	init_input(t_readin *readin, t_input *input)
@@ -69,7 +50,7 @@ BOOL	init_input(t_readin *readin, t_input *input)
 	input->hist_i = readin->history.size;
 	input->display_i = 0;
 	input->display_size = 0;
-	readin->eol = 0;
+	readin->state = READ;
 	if (!init_terminal(readin, input))
 	{
 		vecstr_clear(input->in);

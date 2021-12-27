@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 20:11:21 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:26:38 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,46 @@
 #include "lexer.h"
 #include "parsing.h"
 #include "exe.h"
+#include <unistd.h>
 
 #include <stdio.h> //test
 
-static void	clear_tmp_data(t_msh *msh)
+static void	clear_tmp_data(t_msh *msh, int nb)
 {
+	static char	heredoc[] = ".heredoc\0";
+	int			i;
+	char		tmp[20];
+
 	gc_flush(&(msh->gc));
 	vector_flush(&(msh->tokens), NULL);
+	i = 0;
+	while (i < nb)
+	{
+		mem_copy(tmp, heredoc, 8);
+		utoa_base(i, &tmp[8], "0123456789", 10);
+		if (access(tmp, F_OK) == 0)
+			unlink(tmp);
+		i++;
+	}
 }
 
 static void	minishell(t_msh *msh, char **env)
 {
 	char		*input;
 	t_vector	*parsed;
+	int			nb;
 
 	while (1)
 	{
 		input = get_input(msh);
-		if (!input)
-			exit_program(msh);
-		if (input[0])
+		if (input && input[0])
 		{
 			tokenizer(msh, input);
-			parsed = parse_line(msh);
-			if (parsed != NULL)
+			nb = parser(msh, (char **)msh->tokens.arr, &parsed);
+			if (nb > 0)
 				execute(msh, env, parsed);
-			clear_tmp_data(msh);
 		}
+		clear_tmp_data(msh, valeur_absolue(nb));
 	}
 }
 
