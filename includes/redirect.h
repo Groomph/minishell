@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 19:34:20 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 11:31:18 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:33:43 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include "libft.h"
 # include <stdio.h>
 # include "minishell.h"
 
-void	(*red_origin(char *operator))(char *name_file);
+BOOL	(*red_origin(char *operator))(char *name_file);
 void	(*red_dest(char *operator))(char *name_file);
 
 #endif

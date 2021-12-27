@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/27 11:34:30 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:56:09 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,12 @@
 # include <stdio.h>
 
 void	execute(t_msh *msh, char **env, t_vector *v_cmd);
+void	ft_echo(t_msh *msh, char **arr, char **env);
+void	ft_cd(t_msh *msh, char **arr, char **env);
+void	ft_pwd(t_msh *msh, char **arr, char **env);
+void	ft_export(t_msh *msh, char **arr, char **env);
+void	ft_unset(t_msh *msh, char **arr, char **env);
+void	ft_env(t_msh *msh, char **arr, char **env);
+void	ft_exit(t_msh *msh, char **arr, char **env);
 
 #endif

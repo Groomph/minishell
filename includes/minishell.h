@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/21 19:24:14 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/27 17:32:07 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ typedef struct s_minishell
 	t_gc		gc;
 	t_readin	readin;
 	t_vector	tokens;
+	t_vector	variables;
 	char		**paths;
+	int		exit_state;
 }			t_msh;
 
 void		exit_error(t_msh *msh, char *error, int size);
