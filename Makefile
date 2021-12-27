@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/26 23:58:35 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/12/27 15:50:36 by aldamien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ norme:
 
 clean:
 	rm -rf $(DIR_O)
+	make -C $(LIB)/libft fclean
 
 fclean: clean
 	rm -f $(NAME)
