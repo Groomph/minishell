@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/29 17:24:27 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:08:33 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_minishell
 	t_gc		gc;
 	t_readin	readin;
 	t_vector	tokens;
-	t_vector	env;
+	t_vector	*env;
 	char		**paths;
 	int		exit_state;
 }			t_msh;
@@ -34,5 +34,6 @@ BOOL		assert_bool(t_msh *msh, BOOL check);
 int			assert_errno(t_msh *msh, int i);
 char		*get_input(t_msh *msh);
 BOOL		init_env(t_msh *msh, char **env);
+char		*get_env(t_msh *msh, char *name);
 
 #endif

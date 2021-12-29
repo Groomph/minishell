@@ -6,15 +6,24 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 19:05:47 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 11:25:04 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/29 17:53:32 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 static int	expand_var(t_msh *msh, t_vecstr *string, int i)
 {
+	char	*tmp;
+	char	*token;
+
+	token = string->arr;
+	token = &(token[1]);
+	tmp = get_env(msh, token);
+	printf("%s\n", tmp);
 	(void)msh;
 	(void)string;
 	return (i + 1);

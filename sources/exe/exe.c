@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/29 16:50:49 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:37:53 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,32 @@
 #include "parsing.h"
 
 /*
-static void	is_builtin(t_msh *msh, char **arr, char **env)
-{
 	static char *builtin[8] = {"echo", "cd", "pwd",
 		"export", "unset", "env", "exit", NULL};
 	static void	(*adress[8])(t_msh *, char **, char **) =
 		{ft_echo, ft_cd, ft_pwd, ft_export, ft_unset,
 		ft_env, ft_exit, NULL};
+*/
+
+static void	is_builtin(t_msh *msh, char **arr, char **env)
+{
+	static char *builtin[2] = {"export",NULL};
+	static void	(*adress[2])(t_msh *, char **, char **) =
+		{ft_export, NULL};
 	int	i;
 	
 	i = 0;
+	printf("builtin: %p\n", msh->env);
 	while (builtin[i])
 	{
-		if (str_comp(arr[0], builtin[i]))
+		if (str_comp(arr[0], builtin[i]) == 0)
 			adress[i](msh, arr, env);
 		i++;
 	}
 }
-*/
+
+#include <stdio.h>
+
 static int	fork_loop(t_msh *msh, char **env, t_command *s_cmd, int *fd_in)
 {
 	int	pid;
@@ -41,9 +49,11 @@ static int	fork_loop(t_msh *msh, char **env, t_command *s_cmd, int *fd_in)
 
 	(void)msh;
 	pipe(pipe_tab);
+	printf("avant fork: %p\n", msh->env);
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("enfant: %p\n", msh->env);
 		if (fd_in[1] == 1)
 		{
 			dup2(pipe_tab[1], STDOUT_FILENO);
@@ -58,11 +68,12 @@ static int	fork_loop(t_msh *msh, char **env, t_command *s_cmd, int *fd_in)
 			if (s_cmd->red_in(s_cmd->origin) == FALSE)
 				exit(1);
 		}
-//		is_builtin(msh, (char **)s_cmd->args->arr, env);
+		is_builtin(msh, (char **)s_cmd->args->arr, env);
 		execve(s_cmd->name, (char **)s_cmd->args->arr, env);
 		write(1, "command not existing\n", 21);
 		exit(1);
 	}
+	printf("parent: %p\n", msh->env);
 	wait(&msh->exit_state);
 	close(pipe_tab[1]);
 	close(fd_in[0]);
