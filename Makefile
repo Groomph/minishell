@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/27 16:02:51 by aldamien         ###   ########.fr        #
+#    Updated: 2021/12/29 17:22:34 by aldamien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ INOUT = redirect
 
 DIR_O = temporary
 
-SOURCES = main.c error.c exit.c get_input.c \
+SOURCES = main.c error.c exit.c get_input.c env.c\
 	  $(INPUT)/read_input.c $(INPUT)/interpret_input.c \
 	  $(INPUT)/terminal.c $(INPUT)/signal.c \
 	  $(INPUT)/init.c $(INPUT)/clear.c \

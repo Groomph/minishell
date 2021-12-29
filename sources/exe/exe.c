@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/27 17:58:33 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:50:49 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/wait.h>
 #include "parsing.h"
 
-
+/*
 static void	is_builtin(t_msh *msh, char **arr, char **env)
 {
 	static char *builtin[8] = {"echo", "cd", "pwd",
@@ -33,7 +33,7 @@ static void	is_builtin(t_msh *msh, char **arr, char **env)
 		i++;
 	}
 }
-
+*/
 static int	fork_loop(t_msh *msh, char **env, t_command *s_cmd, int *fd_in)
 {
 	int	pid;
@@ -58,7 +58,7 @@ static int	fork_loop(t_msh *msh, char **env, t_command *s_cmd, int *fd_in)
 			if (s_cmd->red_in(s_cmd->origin) == FALSE)
 				exit(1);
 		}
-		is_builtin(msh, (char **)s_cmd->args->arr, env);
+//		is_builtin(msh, (char **)s_cmd->args->arr, env);
 		execve(s_cmd->name, (char **)s_cmd->args->arr, env);
 		write(1, "command not existing\n", 21);
 		exit(1);

@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 18:06:37 by aldamien         ###   ########.fr       */
+/*   Updated: 2021/12/29 17:24:52 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	clear_tmp_data(t_msh *msh, int nb)
 	}
 }
 
-static void	minishell(t_msh *msh, char **env)
+static void	minishell(t_msh *msh)
 {
 	char		*input;
 	t_vector	*parsed;
@@ -53,7 +53,7 @@ static void	minishell(t_msh *msh, char **env)
 			tokenizer(msh, input);
 			nb = parser(msh, (char **)msh->tokens.arr, &parsed);
 			if (nb > 0)
-				execute(msh, env, parsed);
+				execute(msh, (char **)msh->env.arr, parsed);
 		}
 		clear_tmp_data(msh, valeur_absolue(nb));
 	}
@@ -66,7 +66,9 @@ static BOOL	init_msh(t_msh *msh, char **env)
 		return (FALSE);
 	if (!vector_init(&(msh->tokens), 10))
 		return (FALSE);
-	if (!vector_init(&(msh->variables), 6))
+	if (!vector_init(&(msh->env), 20))
+		return (FALSE);
+	if (!init_env(msh, env))
 		return (FALSE);
 	if (!init_readinput(&(msh->readin)))
 		return (FALSE);
@@ -90,6 +92,6 @@ int	main(int ac, char **av, char **env)
 		write(2, "Unable to init minishell\n", 25);
 		return (0);
 	}
-	minishell(&msh, env);
+	minishell(&msh);
 	return (1);
 }
