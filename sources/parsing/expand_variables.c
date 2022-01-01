@@ -6,55 +6,40 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 19:05:47 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/29 17:53:32 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:57:57 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "lexer.h"
 
-#include <stdio.h>
-
-static int	expand_var(t_msh *msh, t_vecstr *string, int i)
+int	expand_var(t_msh *msh, t_vecstr *string, int i)
 {
-	char	*tmp;
-	char	*token;
+	char	*var;
+	int		i2;
+	char	*content;
+	char	tmp;
 
-	token = string->arr;
-	token = &(token[1]);
-	tmp = get_env(msh, token);
-	printf("%s\n", tmp);
-	(void)msh;
-	(void)string;
-	return (i + 1);
-}
-
-char	*expand_heredoc(t_msh *msh, char *str)
-{
-	int			i;
-	BOOL		check;
-	t_vecstr	*string;
-
-	i = -1;
-	check = 0;
-	while (str[++i])
+	var = &(string->arr[i]);
+	i2 = 1;
+	while (is_alphanum(var[i2]))
+		i2++;
+	tmp = var[i2];
+	var[i2] = '\0';
+	content = get_env(msh, &(var[1]));
+	var[i2] = tmp;
+	vecstr_delone(string, i, i2);
+	if (!content)
+		return (i);
+	i2 = 0;
+	while (content[i2])
 	{
-		if (str[i] == '$')
-			check++;
-	}
-	if (check == 0)
-		return (str);
-	string = vecstr_newfromstr(str);
-	assert_gc(msh, string, (void *)(void *)vecstr_clear);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			i = expand_var(msh, string, i);
-		else
+		if (vecstr_insert(string, i, content[i2]))
 			i++;
+		i2++;
 	}
-	return (string->arr);
+	return (i);
 }
 
 static int	skip_trim_singlequote(t_vecstr *string, int i)
@@ -89,10 +74,11 @@ static void	trim_expand(t_msh *msh, t_vecstr *string)
 			vecstr_delone(string, i, 1);
 			dquote = !dquote;
 		}
-		else if (str[i] == '$')
+		else if (str[i] == '$' && is_alphanum(str[i + 1]))
 			i = expand_var(msh, string, i);
 		else
 			i++;
+		str = string->arr;
 	}
 }
 
@@ -106,7 +92,8 @@ char	*trim_expand_var(t_msh *msh, char *str)
 	check = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"' || str[i] == '$')
+		if (str[i] == '\'' || str[i] == '"' || (str[i] == '$'
+				&& is_alphanum(str[i + 1])))
 			check++;
 		i++;
 	}

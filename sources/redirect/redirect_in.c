@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 19:33:24 by romain            #+#    #+#             */
-/*   Updated: 2021/12/27 16:35:37 by aldamien         ###   ########.fr       */
+/*   Updated: 2022/01/01 02:11:25 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static BOOL	redirection_in_2(char *name_file)
 	if (fd == -1)
 	{
 		perror("Unable to open heredoc file");
-		return(FALSE) ;
+		return (FALSE);
 	}
 	if (unlink(name_file) == -1)
 	{
@@ -54,7 +54,7 @@ static BOOL	redirection_in_2(char *name_file)
 	return (TRUE);
 }
 
-BOOL	(*red_origin(char *operator))(char *name_file)
+int	(*red_origin(char *operator))(char *name_file)
 {
 	if (operator[1] == 0)
 		return (redirection_in);

@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:44:04 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/27 11:26:21 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:59:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <unistd.h>
 
+/*
 static char	*paths_finder(char **env)
 {
 	int	i;
@@ -41,6 +42,7 @@ BOOL	set_path(t_msh *msh, char **env)
 		return (FALSE);
 	return (TRUE);
 }
+*/
 
 char	*find_right_path(t_msh *msh, char *command)
 {

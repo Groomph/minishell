@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/26 19:04:12 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:31:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ int					is_not_number(long double doub);
 int					is_infinite(long double doub);
 int					is_whitespace(char c);
 int					is_only_numeric(char *s);
-
+BOOL				is_alpha(char c);
+int					is_numeric(char c);
+int					is_alphanum(char c);
 /*
  *******************  CHAR & STRING  *******************
 */

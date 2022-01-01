@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 17:02:26 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 11:25:55 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:58:51 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,28 @@ static BOOL	is_valid_redirect(char *token, char *next)
 	return (FALSE);
 }
 
-static BOOL	create_out_file(char *name_file)
+static BOOL	check_expansion(char *name_file, char *old_name)
+{
+	if (!name_file || name_file[0] == '\0')
+	{
+		write(1, old_name, string_len(old_name));
+		write(1, ": ambiguous redirect\n", 21);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+static BOOL	create_out_file(char *name_file, char *old_name)
 {
 	int	fd;
 
+	if (!check_expansion(name_file, old_name))
+		return (FALSE);
 	fd = open(name_file, O_CREAT | O_RDONLY,
 			S_IROTH | S_IRGRP | S_IRUSR | S_IWGRP | S_IWUSR);
 	if (fd == -1)
 	{
-		perror("Unable to create output redirection file: ");
+		perror("Unable to create output redirection file");
 		return (FALSE);
 	}
 	close(fd);
@@ -73,16 +86,23 @@ int	parse_redirection(t_msh *msh, t_command *cmd, char *token, char *next)
 	if (token[0] == '<')
 	{
 		cmd->red_in = red_origin(token);
-		cmd->origin = trim_expand_var(msh, next);
-		if (token[1] && !create_heredoc(msh, cmd))
-			return (0);
+		if (token[1])
+		{
+			cmd->origin = next;
+			if (!create_heredoc(msh, cmd))
+				return (0);
+		}
+		else
+		{
+			cmd->origin = trim_expand_var(msh, next);
+			if (!check_expansion(cmd->origin, next))
+				return (0);
+		}
+		return (2);
 	}
-	else if (token[0] == '>')
-	{
-		cmd->red_out = red_dest(token);
-		cmd->dest = trim_expand_var(msh, next);
-		if (!(create_out_file(cmd->dest)))
-			return (0);
-	}
+	cmd->red_out = red_dest(token);
+	cmd->dest = trim_expand_var(msh, next);
+	if (!(create_out_file(cmd->dest, next)))
+		return (0);
 	return (2);
 }

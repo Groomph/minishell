@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/29 19:13:06 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/31 21:08:57 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	clear_tmp_data(t_msh *msh, int nb)
 static void	minishell(t_msh *msh)
 {
 	char		*input;
-	t_vector	*parsed;
+	t_vector	*cmds;
 	int			nb;
 
 	while (1)
@@ -51,9 +51,9 @@ static void	minishell(t_msh *msh)
 		if (input && input[0])
 		{
 			tokenizer(msh, input);
-			nb = parser(msh, (char **)msh->tokens.arr, &parsed);
+			nb = parser(msh, (char **)msh->tokens.arr, &cmds);
 			if (nb > 0)
-				execute(msh, (char **)msh->env->arr, parsed);
+				execute_loop(msh, cmds);
 		}
 		clear_tmp_data(msh, valeur_absolue(nb));
 	}
@@ -71,8 +71,6 @@ static BOOL	init_msh(t_msh *msh, char **env)
 	if (!init_env(msh, env))
 		return (FALSE);
 	if (!init_readinput(&(msh->readin)))
-		return (FALSE);
-	if (!set_path(msh, env))
 		return (FALSE);
 	return (TRUE);
 }

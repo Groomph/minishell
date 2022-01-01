@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/29 18:14:43 by romain           ###   ########.fr        #
+#    Updated: 2022/01/01 12:55:22 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SOURCES = main.c error.c exit.c get_input.c env.c\
 	  $(PARSER)/parsing_word_str.c $(PARSER)/path.c \
 	  $(PARSER)/expand_variables.c $(PARSER)/heredoc.c \
 	  $(EXE)/exe.c $(EXE)/export.c \
+	  $(EXE)/builtin_hub.c $(EXE)/redirections.c \
 	  $(INOUT)/redirect_in.c $(INOUT)/redirect_out.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))

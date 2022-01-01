@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2021/12/26 19:03:39 by rsanchez         ###   ########.fr        #
+#    Updated: 2022/01/01 12:45:08 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ SOURCES	= valeur_absolue.c optimized_msleep.c \
 	  $(BYTE)/ft_calloc.c \
 	  ${IS_FCT}/is_double_signed.c ${IS_FCT}/is_infinite.c \
 	  ${IS_FCT}/is_not_number.c $(IS_FCT)/is_whitespace.c \
-	  ${IS_FCT}/is_only_numeric.c \
+	  ${IS_FCT}/is_only_numeric.c ${IS_FCT}/is_alpha.c \
+	  ${IS_FCT}/is_numeric.c ${IS_FCT}/is_alphanum.c \
 	  ${STRING}/shift_left_erase.c ${STRING}/shift_right_add.c \
 	  ${STRING}/str_n_comp.c ${STRING}/str_comp.c \
 	  ${STRING}/string_len.c ${STRING}/string_split.c \
