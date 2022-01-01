@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 12:28:34 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 14:51:23 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	execute_builtin_pipe(t_msh *msh, t_vector *cmds, int i, int fd_in);
 void	pipe_redirections(int fd_in, int pipe_tab[], int pos, int len_pipe);
 BOOL	file_redirections(t_command *cmd);
 
-//void	ft_echo(t_msh *msh, char **arr, char **env);
+void	ft_echo(t_msh *msh, char **arr, BOOL forked);
 //void	ft_cd(t_msh *msh, char **arr, char **env);
 //void	ft_pwd(t_msh *msh, char **arr, char **env);
 void	ft_export(t_msh *msh, char **arr, BOOL forked);
 //void	ft_unset(t_msh *msh, char **arr, char **env);
-//void	ft_env(t_msh *msh, char **arr, char **env);
+void	ft_env(t_msh *msh, char **arr, BOOL forked);
 //void	ft_exit(t_msh *msh, char **arr, char **env);
 
 #endif
