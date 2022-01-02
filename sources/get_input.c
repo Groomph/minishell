@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 22:18:59 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 11:27:04 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:28:43 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*complete_input(t_msh *msh, char *input, char *input2)
 		write(1, "\n", 1);
 		assert_gc(msh, input2, free);
 		if (msh->readin.state == EOT)
-			exit_program(msh);
+			exit_program(msh, 0);
 		if (msh->readin.state == INTERRUPTED)
 			return (NULL);
 		input = strjoin(input, "\n");
@@ -68,7 +68,7 @@ char	*get_input(t_msh *msh)
 	assert_gc(msh, input, free);
 	write(1, "\n", 1);
 	if (msh->readin.state == EOT)
-		exit_program(msh);
+		exit_program(msh, 0);
 	if (msh->readin.state == INTERRUPTED)
 		return (NULL);
 	input = complete_input(msh, input, NULL);

@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:25:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 13:03:35 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:49:48 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void	pipe_redirections(int fd_in, int pipe_tab[], int pos, int len_pipe)
 {
+	close(pipe_tab[0]);
 	if (pos < len_pipe - 1)
 	{
 		if (dup2(pipe_tab[1], STDOUT_FILENO) == -1)

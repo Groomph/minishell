@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 18:02:48 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 13:02:56 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:25:55 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ void	ft_export(t_msh *msh, char **arr, BOOL forked)
 		i++;
 	}
 	if (forked)
-		exit(error);
+		exit_program(msh, error);
 	msh->exit_state = error;
 }

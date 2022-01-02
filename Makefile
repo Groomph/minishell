@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2022/01/01 14:52:14 by aldamien         ###   ########.fr        #
+#    Updated: 2022/01/01 22:11:24 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ EXE = exe
 
 INOUT = redirect
 
+BUILT = builtins
+
 DIR_O = temporary
 
 SOURCES = main.c error.c exit.c get_input.c env.c\
@@ -56,10 +58,11 @@ SOURCES = main.c error.c exit.c get_input.c env.c\
 	  $(HIST)/history.c \
 	  $(LEXER)/tokenizer.c $(LEXER)/lexer_rules.c \
 	  $(PARSER)/parsing.c $(PARSER)/parsing_redirect.c \
-	  $(PARSER)/parsing_word_str.c $(PARSER)/path.c \
+	  $(PARSER)/parsing_word_str.c \
 	  $(PARSER)/expand_variables.c $(PARSER)/heredoc.c \
-	  $(EXE)/exe.c $(EXE)/export.c $(EXE)/ft_env.c $(EXE)/ft_echo.c\
+	  $(EXE)/exe.c $(EXE)/utils.c \
 	  $(EXE)/builtin_hub.c $(EXE)/redirections.c \
+	  $(BUILT)/export.c $(BUILT)/ft_env.c $(BUILT)/ft_echo.c \
 	  $(INOUT)/redirect_in.c $(INOUT)/redirect_out.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
@@ -88,6 +91,7 @@ $(DIR_O)/%.o: $(DIR_S)/%.c
 	@mkdir -p $(DIR_O)/$(PARSER)
 	@mkdir -p $(DIR_O)/$(EXE)
 	@mkdir -p $(DIR_O)/$(INOUT)
+	@mkdir -p $(DIR_O)/$(BUILT)
 	$(CC) $(CFLAGS) -I $(HEADER) -o $@ -c $<
 
 norme:

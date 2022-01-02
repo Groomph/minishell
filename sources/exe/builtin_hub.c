@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:23:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 14:52:51 by aldamien         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:26:37 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	execute_builtin_pipe(t_msh *msh, t_vector *cmds, int i, int fd_in)
 	{
 		pipe_redirections(fd_in, pipe_tab, i, cmds->size);
 		if (!file_redirections(cmd))
-			exit(1);
+			exit_program(msh, 1);
 		builtin_hub(msh, cmd, TRUE);
 		write(1, "not supposed to happen\n", 23);
-		exit(1);
+		exit_program(msh, 1);
 	}
 	wait(&msh->exit_state);
 	close(pipe_tab[1]);

@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:58:28 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 02:06:22 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:11:59 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ char	*get_env(t_msh *msh, char *name)
 	return (NULL);
 }
 
-BOOL	set_path(t_msh *msh, char *paths)
-{
-	paths = &(paths[5]);
-	msh->paths = string_split(paths, ':');
-	if (!(msh->paths))
-		return (FALSE);
-	return (TRUE);
-}
-
 BOOL	init_env(t_msh *msh, char **env)
 {
 	int		i;
@@ -51,11 +42,6 @@ BOOL	init_env(t_msh *msh, char **env)
 		return (FALSE);
 	while (env[i])
 	{
-		if (str_n_comp("PATH=", env[i], 5) == 0)
-		{
-			if (!set_path(msh, env[i]))
-				return (FALSE);
-		}
 		tmp = string_duplicate(env[i], -1);
 		if (tmp == NULL)
 			return (FALSE);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/01 13:22:07 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 13:59:50 by aldamien         ###   ########.fr       */
+/*   Created: 2022/01/01 14:08:59 by aldamien          #+#    #+#             */
+/*   Updated: 2022/01/01 22:26:10 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 #include "minishell.h"
 #include "libft.h"
 
-void	ft_env(t_msh *msh, char **arr, BOOL forked)
+void	ft_echo(t_msh *msh, char **arr, BOOL forked)
 {
 	int	i;
-	char	**env;
-	
-	(void)arr;
-	env = (char **)msh->env->arr;
-	i = 0;
-	while (env[i])
+	BOOL	new_line;
+
+	i = 1;
+	new_line = TRUE;
+	if (arr[1] && str_n_comp(arr[1], "-n", 3) == 0)
 	{
-		write(1, env[i], string_len(env[i]));
-		write(1, "\n", 1);
+		i = 2;
+		new_line = FALSE;
+	}
+	while (arr[i])
+	{
+		write(1, arr[i], string_len(arr[i]));
+		if (arr[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
+	if (new_line)
+		write(1, "\n", 1);
 	if (forked)
-		exit(0);
+		exit_program(msh, 0);
 	msh->exit_state = 0;
 }
