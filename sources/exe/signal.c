@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:48:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 21:31:40 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 22:04:53 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
-
 
 BOOL	set_signal(int sig, void (*f)(int sig))
 {
@@ -39,7 +38,6 @@ BOOL	restaure_signal(int sig)
 
 	mem_set(&s_sig, 0, sizeof(sig));
 	s_sig.sa_handler = SIG_DFL;
-	//s_sig.sa_flags = SA_RESTART;
 	if (sigaction(sig, &s_sig, NULL) == -1)
 	{
 		perror("unable to restaure signal: ");
