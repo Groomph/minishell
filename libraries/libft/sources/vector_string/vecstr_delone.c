@@ -6,11 +6,12 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:14:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 02:44:18 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:07:57 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	vecstr_delone(t_vecstr *v, int i, int size)
 {

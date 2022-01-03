@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 15:03:26 by romain            #+#    #+#             */
-/*   Updated: 2021/09/15 15:09:45 by romain           ###   ########.fr       */
+/*   Updated: 2021/12/21 16:46:52 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ char	*string_duplicate(const char *original, int size)
 	new = malloc(sizeof(char) * (size + 1));
 	if (!new)
 		return (NULL);
-	while (original[i])
-	{
-		new[i] = original[i];
-		i++;
-	}
-	new[i] = '\0';
+	mem_copy(new, original, size);
+	new[size] = '\0';
 	return (new);
 }

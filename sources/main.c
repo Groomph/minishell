@@ -6,38 +6,70 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/14 21:24:34 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 20:20:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "read_input.h"
+#include "lexer.h"
+#include "parsing.h"
+#include "exe.h"
 #include <unistd.h>
 
 #include <stdio.h> //test
 
-//void	assert_garbage_collector(void)
-
-static void	minishell(t_msh *msh, char **env)
+static void	clear_tmp_data(t_msh *msh, int nb)
 {
-	char	*input;
+	static char	heredoc[] = ".heredoc\0";
+	int			i;
+	char		tmp[20];
 
-	(void)env;
-	while (1)
+	gc_flush(&(msh->gc));
+	vector_flush(&(msh->tokens), NULL);
+	i = 0;
+	while (i < nb)
 	{
-		input = get_input(msh);
-		tokenizer(msh, input);
+		mem_copy(tmp, heredoc, 8);
+		utoa_base(i, &tmp[8], "0123456789", 10);
+		if (access(tmp, F_OK) == 0)
+			unlink(tmp);
+		i++;
 	}
 }
 
-static BOOL	init_msh(t_msh *msh)
+static void	minishell(t_msh *msh)
+{
+	char		*input;
+	t_vector	*cmds;
+	int			nb;
+
+	while (1)
+	{
+		nb = 0;
+		input = get_input(msh);
+		if (input && input[0])
+		{
+			tokenizer(msh, input);
+			nb = parser(msh, (char **)msh->tokens.arr, &cmds);
+			if (nb > 0)
+				execute_loop(msh, cmds);
+		}
+		clear_tmp_data(msh, valeur_absolue(nb));
+	}
+}
+
+static BOOL	init_msh(t_msh *msh, char **env)
 {
 	mem_set(msh, 0, sizeof(*msh));
+	if (!gc_init(&(msh->gc)))
+		return (FALSE);
 	if (!vector_init(&(msh->tokens), 10))
 		return (FALSE);
-	if (!vector_init(&(msh->history), 10))
+	if (!init_env(msh, env))
 		return (FALSE);
-	if (!gc_init(&(msh->gc)))
+	if (!init_readinput(&(msh->readin)))
 		return (FALSE);
 	return (TRUE);
 }
@@ -52,11 +84,11 @@ int	main(int ac, char **av, char **env)
 		write(2, "minishell doesn't take arguments\n", 33);
 		return (0);
 	}
-	if (!init_msh(&msh))
+	if (!init_msh(&msh, env))
 	{
 		write(2, "Unable to init minishell\n", 25);
 		return (0);
 	}
-	minishell(&msh, env);
+	minishell(&msh);
 	return (1);
 }

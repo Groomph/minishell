@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 20:55:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/16 01:04:16 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:27:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,18 @@ void	exit_error(t_msh *msh, char *error, int size)
 		write(2, error, size);
 	else
 		perror(error);
-	exit_program(msh);
+	exit_program(msh, 1);
 }
 
-void	*assert_vector(t_msh *msh, t_vector *v, void *data)
+void	*assert_gc(t_msh *msh, void *data, void (*f)(void *))
 {
-	if (!data || !vector_add(v, data))
+	if (!data)
 	{
 		exit_error(msh, "error1\n", 7);
 	}
-	return (data);
-}
-
-void	*assert_gc(t_msh *msh, void *data)
-{
-	if (!data || !gc_add(&(msh->gc), data, free))
+	if (!gc_add(&(msh->gc), data, f))
 	{
+		f(data);
 		exit_error(msh, "error2\n", 7);
 	}
 	return (data);
@@ -51,11 +47,20 @@ void	*assert_malloc(t_msh *msh, void *data)
 	return (data);
 }
 
-char	assert_str(t_msh *msh, t_vecstr *v, char c)
+BOOL	assert_bool(t_msh *msh, BOOL check)
 {
-	if (vecstr_add(v, c))
+	if (!check)
 	{
 		exit_error(msh, "error4\n", 7);
 	}
-	return (c);
+	return (check);
+}
+
+int	assert_errno(t_msh *msh, int i)
+{
+	if (i == -1)
+	{
+		exit_error(msh, "minishell: ", -1);
+	}
+	return (i);
 }
