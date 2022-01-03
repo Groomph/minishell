@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 19:52:56 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:27:20 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ static const BOOL	g_token_rules[TOK_NB][CHAR_NB] = {
 [TOK_WORD] = {
 	//
 [OPERATOR] = FALSE,
-[QUOTE] = TRUE,
+[QUOTE] = FALSE,
 [CHARACTER] = TRUE,
 [BLANK] = FALSE,
 [IGNORE] = FALSE

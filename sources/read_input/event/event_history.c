@@ -6,12 +6,14 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 21:48:48 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 13:15:23 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/24 13:35:02 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "read_input.h"
+
+#include <unistd.h> //test
 
 BOOL	history_swapper(t_vector *history, t_input *input)
 {

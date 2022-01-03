@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:25:29 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/21 18:41:06 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:31:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ int					is_not_number(long double doub);
 int					is_infinite(long double doub);
 int					is_whitespace(char c);
 int					is_only_numeric(char *s);
-
+BOOL				is_alpha(char c);
+int					is_numeric(char c);
+int					is_alphanum(char c);
 /*
  *******************  CHAR & STRING  *******************
 */
@@ -124,6 +126,7 @@ size_t				string_len(const char *s);
 char				**string_split(const char *str, char c);
 int					shift_right_add(char *str, int i, char c);
 int					shift_left_erase(char *str, int i, int dist);
+int					str_comp(const char *str, const char *str2);
 int					str_n_comp(const char *str, const char *str2, int stop);
 char				*str_nstr_comp(char *str1, char *str2, size_t size_str2);
 char				*string_duplicate(const char *original, int size);
