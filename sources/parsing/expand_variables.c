@@ -6,13 +6,31 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 19:05:47 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 12:57:57 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:13:11 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include "lexer.h"
+
+int	expand_exitstate(t_msh *msh, t_vecstr *string, int i)
+{
+	char	buff[20];
+	int		size;
+	int		i2;
+
+	vecstr_delone(string, i, 2);
+	size = itoa_base(msh->exit_state, buff, "0123456789", 10);
+	i2 = 0;
+	while (buff[i2])
+	{
+		if (vecstr_insert(string, i, buff[i2]))
+			i++;
+		i2++;
+	}
+	return (i);
+}
 
 int	expand_var(t_msh *msh, t_vecstr *string, int i)
 {
@@ -76,6 +94,8 @@ static void	trim_expand(t_msh *msh, t_vecstr *string)
 		}
 		else if (str[i] == '$' && is_alphanum(str[i + 1]))
 			i = expand_var(msh, string, i);
+		else if (str[i] == '$' && str[i + 1] == '?')
+			i = expand_exitstate(msh, string, i);
 		else
 			i++;
 		str = string->arr;
@@ -92,8 +112,7 @@ char	*trim_expand_var(t_msh *msh, char *str)
 	check = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"' || (str[i] == '$'
-				&& is_alphanum(str[i + 1])))
+		if (str[i] == '\'' || str[i] == '"' || str[i] == '$')
 			check++;
 		i++;
 	}

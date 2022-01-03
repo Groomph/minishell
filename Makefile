@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2022/01/03 16:26:32 by rsanchez         ###   ########.fr        #
+#    Updated: 2022/01/03 21:29:18 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SOURCES = main.c error.c exit.c get_input.c env.c\
 	  $(PARSER)/parsing.c $(PARSER)/parsing_redirect.c \
 	  $(PARSER)/parsing_word_str.c \
 	  $(PARSER)/expand_variables.c $(PARSER)/heredoc.c \
-	  $(EXE)/exe.c $(EXE)/utils.c \
+	  $(EXE)/exe.c $(EXE)/utils.c $(EXE)/signal.c \
 	  $(EXE)/builtin_hub.c $(EXE)/redirections.c \
 	  $(BUILT)/ft_export.c $(BUILT)/ft_env.c $(BUILT)/ft_getenv.c \
 	  $(BUILT)/ft_unset.c $(BUILT)/ft_echo.c \

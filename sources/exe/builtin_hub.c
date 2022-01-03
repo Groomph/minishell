@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:23:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 16:25:51 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 20:51:49 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,12 @@ void	execute_builtin_pipe(t_msh *msh, t_vector *cmds, int i)
 	pid = fork();
 	if (pid == 0)
 		child_built(msh, cmds, i);
+	set_signal(SIGINT, handler);
+	set_signal(SIGQUIT, handler);
 	wait(&msh->exit_state);
+	msh->exit_state = what_sig_kill(msh->exit_state);
+	restaure_signal(SIGINT);
+	restaure_signal(SIGQUIT);
 	close(cmd->pipe[1]);
 	if (i == cmds->size - 1)
 		close(cmd->pipe[0]);
