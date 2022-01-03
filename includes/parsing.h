@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 16:54:03 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:11:01 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int			parse_redirection(t_msh *msh, t_command *cmd,
 
 char		*trim_expand_var(t_msh *msh, char *str);
 int		expand_var(t_msh *msh, t_vecstr *string, int i);
+int		expand_exitstate(t_msh *msh, t_vecstr *string, int i);
 
 BOOL		create_heredoc(t_msh *msh, t_command *cmd);
 
