@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 17:03:27 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 20:20:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	minishell(t_msh *msh)
 
 	while (1)
 	{
+		nb = 0;
 		input = get_input(msh);
 		if (input && input[0])
 		{

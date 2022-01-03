@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 21:17:31 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 12:58:26 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:13:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,27 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+static BOOL	is_expandable(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
 static char	*expand_heredoc(t_msh *msh, char *str, char *end)
 {
 	int			i;
-	BOOL		check;
 	t_vecstr	*string;
 
 	i = -1;
-	check = 0;
-	while (str[++i])
-	{
-		if (str[i] == '$' && is_alphanum(str[i + 1]))
-			check++;
-	}
-	if (check == 0 || str_comp(str, end) == 0)
+	if (!is_expandable(str) || str_comp(str, end) == 0)
 		return (str);
 	string = vecstr_newfromstr(str);
 	assert_gc(msh, string, (void *)(void *)vecstr_clear);
@@ -42,6 +49,8 @@ static char	*expand_heredoc(t_msh *msh, char *str, char *end)
 	{
 		if (str[i] == '$' && is_alphanum(str[i + 1]))
 			i = expand_var(msh, string, i);
+		else if (str[i] == '$' && str[i + 1] == '?')
+			i = expand_exitstate(msh, string, i);
 		else
 			i++;
 	}

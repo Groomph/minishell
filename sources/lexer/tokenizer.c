@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:27:46 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 00:46:38 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:59:10 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	get_token(char *input)
 	int	token_type;
 	int	i;
 
+	if (input[0] == '\0')
+		return (0);
 	char_type = get_char_type(input[0]);
 	token_type = get_token_type(char_type);
 	i = 1;
@@ -52,7 +54,7 @@ void	tokenizer(t_msh *msh, char *input)
 
 	while (input[0])
 	{
-		while (get_token_type(get_char_type(input[0])) == NOT_A_TOKEN)
+		while (input[0] && fast_token_type(input[0]) == NOT_A_TOKEN)
 			input++;
 		i = get_token(input);
 		if (i > 0)
