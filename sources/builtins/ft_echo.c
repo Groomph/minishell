@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 14:08:59 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 22:26:10 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/02 23:05:48 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	ft_echo(t_msh *msh, char **arr, BOOL forked)
 {
-	int	i;
+	int		i;
 	BOOL	new_line;
 
 	i = 1;

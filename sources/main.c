@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 20:12:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/31 21:08:57 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/02 23:03:48 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static BOOL	init_msh(t_msh *msh, char **env)
 		return (FALSE);
 	if (!vector_init(&(msh->tokens), 10))
 		return (FALSE);
-//	if (!vector_init(&(msh->env), 20))
-//		return (FALSE);
 	if (!init_env(msh, env))
 		return (FALSE);
 	if (!init_readinput(&(msh->readin)))

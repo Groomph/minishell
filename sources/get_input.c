@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 22:18:59 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 22:28:43 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 01:21:24 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_input(t_msh *msh)
 {
 	char	*input;
 
-	input = read_input(&(msh->readin), "minishell: ", 11);
+	input = read_input(&(msh->readin), "\e[1;35mminishell: \e[0m", 22);
 	assert_gc(msh, input, free);
 	write(1, "\n", 1);
 	if (msh->readin.state == EOT)

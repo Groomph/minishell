@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:25:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/01 22:49:48 by romain           ###   ########.fr       */
+/*   Updated: 2022/01/02 23:07:22 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,26 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	pipe_redirections(int fd_in, int pipe_tab[], int pos, int len_pipe)
+void	connect_pipe(t_command **cmds, int i, int len)
 {
-	close(pipe_tab[0]);
-	if (pos < len_pipe - 1)
+	t_command	*cmd;
+	int			fd_in;
+
+	cmd = cmds[i];
+	close(cmd->pipe[0]);
+	if (i < len - 1)
 	{
-		if (dup2(pipe_tab[1], STDOUT_FILENO) == -1)
+		if (dup2(cmd->pipe[1], STDOUT_FILENO) == -1)
 			perror("Unable to dup2 stdout");
 	}
-	close(pipe_tab[1]);
-	dup2(fd_in, 0);
-	close(fd_in);
+	close(cmd->pipe[1]);
+	if (i > 0)
+	{
+		fd_in = cmds[i - 1]->pipe[0];
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+			perror("Unable to dup2 stdin pipe");
+		close(fd_in);
+	}
 }
 
 BOOL	file_redirections(t_command *cmd)

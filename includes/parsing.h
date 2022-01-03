@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:07:46 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 22:11:37 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/02 22:46:09 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_command
 	char		*origin;
 	void		(*red_out)(char *);
 	char		*dest;
+	int		pipe[2];
 	int			id;
 }			t_command;
 
