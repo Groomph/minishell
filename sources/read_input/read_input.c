@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:43:40 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/24 16:48:33 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:44:02 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*send_input(t_readin *readin, t_input *input)
 	return (str);
 }
 
-//	print_info(&input);
+//print_info(&input);
 
 char	*read_input(t_readin *readin, char *prompt, int size)
 {

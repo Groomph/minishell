@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 16:52:35 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:49:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 static void	child_work(t_msh *msh, t_vector *cmds, int i)
 {
@@ -35,17 +36,35 @@ static void	child_work(t_msh *msh, t_vector *cmds, int i)
 	exit_program(msh, 1);
 }
 
+#include <stdio.h>
+
+static void	coucou(int sig)
+{
+	if (sig == SIGINT)
+		write(1, "\n", 1);
+	else if (sig == SIGQUIT)
+		write(1, "QUIT (core dumped)\n", 19);
+}
+
 static void	execute_cmd(t_msh *msh, t_vector *cmds, int i)
 {
 	int			pid;
 	t_command	*cmd;
 
+
 	cmd = cmds->arr[i];
 	pipe(cmd->pipe);
 	pid = fork();
 	if (pid == 0)
+	{
 		child_work(msh, cmds, i);
+	}
+	set_signal(SIGINT, coucou);
+	set_signal(SIGQUIT, coucou);
 	wait(&msh->exit_state);
+	restaure_signal(SIGINT);
+	restaure_signal(SIGQUIT);
+	printf("%d\n", msh->exit_state);
 	close(cmd->pipe[1]);
 	if (i == cmds->size - 1)
 		close(cmd->pipe[0]);
