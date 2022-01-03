@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:51:04 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 18:28:01 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:46:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 # include "libft.h"
 # include <termios.h>
 
-enum	e_termcaps
+typedef enum e_state
 {
-	ARROW_UP = 0,
-	ARROW_DOWN,
-	ARROW_RIGHT,
-	ARROW_LEFT,
-	DELETE
-};
+	READ = 0,
+	NEWLINE,
+	EOT,
+	INTERRUPTED,
+	ERROR
+}		t_state;
 
 typedef struct termios	t_term;
 
@@ -32,8 +32,17 @@ typedef struct s_read_input
 	t_gc		gc;
 	t_vector	history;
 	t_term		term_config;
-	int			eol;
+	t_state		state;
 }			t_readin;
+
+enum	e_termcaps
+{
+	ARROW_UP = 0,
+	ARROW_DOWN,
+	ARROW_RIGHT,
+	ARROW_LEFT,
+	DELETE
+};
 
 //	int	i	position curseur string
 //	int	display_i	position curseur display

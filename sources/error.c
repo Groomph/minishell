@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 20:55:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/18 00:57:22 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/01 22:27:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_error(t_msh *msh, char *error, int size)
 		write(2, error, size);
 	else
 		perror(error);
-	exit_program(msh);
+	exit_program(msh, 1);
 }
 
 void	*assert_gc(t_msh *msh, void *data, void (*f)(void *))

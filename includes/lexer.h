@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 19:52:54 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:32:33 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ enum	e_token_type
 };
 
 void		tokenizer(t_msh *msh, char *input);
-int		get_token(char *input);
+int			get_token(char *input);
 
 int			get_char_type(unsigned char c);
 int			fast_token_type(unsigned char c);

@@ -3,123 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2021/12/22 19:39:05 by rsanchez         ###   ########.fr       */
+/*   Created: 2021/12/22 20:48:54 by rsanchez          #+#    #+#             */
+/*   Updated: 2021/12/27 11:25:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include "lexer.h"
 #include "parsing.h"
-#include "redirect.h"
-#include "stdio.h"
-#include "unistd.h"
+#include <unistd.h>
 
-t_vector	*parse_line(t_msh *msh)
+BOOL	is_separator(char *token)
 {
-	t_vector	*line;
-	char		*token;
-	int		i;
-
-	line = vector_new(3);
-	assert_gc(msh, line, (void *)(void *)vector_empty_clear);
-	i = 0;
-	if (check_syntax(msh) == 0)
-		return (NULL);
-	while (msh->tokens.arr[i])
-	{
-		token = vector_get(&msh->tokens, i);
-		if (token[0] != '|')
-			assert_bool(msh, vector_add(line, get_command(msh, &i)));
-		else
-		{
-			assert_bool(msh, vector_add(line, msh->tokens.arr[i]));
-			i++;
-		}
-	}
-	return (line);
+	if (!token)
+		return (TRUE);
+	if (token[0] == '|')
+		return (TRUE);
+	return (FALSE);
 }
 
-static t_command	*init_command(t_msh *msh, char **l_cmd)
+static BOOL	parse_separator(char **tokens, int i)
+{
+	if (i == 0)
+	{
+		write(1, "Error: starting command with pipe\n", 34);
+		return (FALSE);
+	}
+	if (tokens[i][0] == '|' && tokens[i][1] == '\0')
+		return (TRUE);
+	write(1, "Syntax error: unknown operator \"", 32);
+	write(1, tokens[i], string_len(tokens[i]));
+	write(1, "\"\n", 2);
+	return (FALSE);
+}
+
+int	parse_token(t_msh *msh, t_command *cmd, char **tokens)
+{
+	int	type;
+	int	ret;
+
+	type = fast_token_type(tokens[0][0]);
+	ret = 0;
+	if (type == TOK_OPERATOR)
+		ret = parse_redirection(msh, cmd, tokens[0], tokens[1]);
+	else
+		ret = parse_word(msh, cmd, tokens[0]);
+	if (ret <= 0)
+		return (0);
+	return (ret);
+}
+
+int	parse_new_command(t_msh *msh, t_vector *list, char **tokens, int id)
+{
+	int			i;
+	t_command	*cmd;
+	int			ret;
+
+	i = 0;
+	cmd = ft_calloc(1, sizeof(t_command));
+	assert_gc(msh, cmd, free);
+	if (!(vector_add(list, cmd)))
+		return (0);
+	cmd->args = vector_new(5);
+	assert_gc(msh, cmd->args, (void *)(void *)vector_empty_clear);
+	cmd->id = id;
+	while (!(is_separator(tokens[i])))
+	{
+		ret = parse_token(msh, cmd, &(tokens[i]));
+		if (ret <= 0)
+			return (0);
+		i += ret;
+	}
+	return (i);
+}
+
+int	parser(t_msh *msh, char **tokens, t_vector **list)
 {
 	int	i;
-	t_command	*s_cmd;
+	int	id;
+	int	ret;
 
-	s_cmd = malloc(sizeof(t_command));
-	assert_gc(msh, s_cmd, free);
 	i = 0;
-	mem_set(s_cmd, 0, sizeof(t_command));
-	s_cmd->args = l_cmd;
-	while (l_cmd[i])
+	id = 0;
+	*list = vector_new(3);
+	assert_gc(msh, *list, (void *)(void *)vector_empty_clear);
+	while (tokens[i])
 	{
-		if (l_cmd[i + 1] && l_cmd[i + 1][0] == '<')
-		{
-			s_cmd->origin = l_cmd[i];
-			s_cmd->red_in = red_origin(l_cmd[i + 1]);
-			i += 2;
-		}
-		else if (l_cmd[i][0] == '>')
-		{
-			s_cmd->dest = l_cmd[i + 1];
-			s_cmd->red_out = red_dest(l_cmd[i]);
-			i += 2;
-		}
+		if (is_separator(tokens[i]))
+			ret = parse_separator(tokens, i);
 		else
 		{
-			if (s_cmd->name == NULL)
-				s_cmd->name = find_right_path(msh, l_cmd[i]);
-			l_cmd[0] = l_cmd[i];
-			l_cmd++;
+			ret = parse_new_command(msh, *list, &(tokens[i]), id);
+			id++;
 		}
+		if (ret <= 0)
+			return (id * -1);
+		i += ret;
 	}
-	l_cmd[0] = NULL;
-	return (s_cmd);
-}
-
-void		debug_s_cmd(t_command *s_cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("name = ''%s''\n", s_cmd->name);
-	printf("args\n");
-	while (s_cmd->args[i])
-	{
-		printf("args %d = ''%s''\n", i, s_cmd->args[i]);
-		i++;
-	}
-	printf("red_in = %p\n", s_cmd->red_in);
-	printf("origin = ''%s''\n", s_cmd->origin);
-	printf("red_out = %p\n", s_cmd->red_out);
-	printf("dest = ''%s''\n", s_cmd->dest);
-}
-
-t_command	*get_command(t_msh *msh, int *i)
-{
-	t_command	*s_cmd;
-	char	**cmds;
-	char	*token;
-	int	j;
-	int	k;
-
-	j = (*i);
-	token = vector_get(&msh->tokens, (*i));
-	while (token && token[0] != '|')
-	{
-		(*i)++;
-		token = vector_get(&msh->tokens, (*i));
-	}
-	cmds = ft_calloc((*i) - j + 1, sizeof(char *));
-	assert_gc(msh, cmds, free);
-	k = 0;
-	while (msh->tokens.arr[j] && j < (*i))
-	{
-		cmds[k] = vector_get(&(msh->tokens), j); 
-		k++;
-		j++;
-	}
-	s_cmd = init_command(msh, cmds);
-//	debug_s_cmd(s_cmd);
-	return (s_cmd);
+	return (id);
 }

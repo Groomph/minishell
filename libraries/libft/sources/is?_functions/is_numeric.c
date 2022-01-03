@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.h                                         :+:      :+:    :+:   */
+/*   is_numeric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 19:34:20 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/27 16:33:43 by aldamien         ###   ########.fr       */
+/*   Created: 2022/01/01 12:46:58 by rsanchez          #+#    #+#             */
+/*   Updated: 2022/01/01 12:47:53 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REDIRECT_H
-# define REDIRECT_H
+#include "libft.h"
 
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include "libft.h"
-# include <stdio.h>
-# include "minishell.h"
-
-BOOL	(*red_origin(char *operator))(char *name_file);
-void	(*red_dest(char *operator))(char *name_file);
-
-#endif
+BOOL	is_numeric(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (TRUE);
+	return (FALSE);
+}

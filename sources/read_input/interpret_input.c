@@ -6,12 +6,13 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 14:00:03 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/22 16:27:05 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:57:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "read_input.h"
+#include <errno.h>
 
 #include <stdio.h>  //test
 
@@ -64,27 +65,52 @@ int	get_termcaps(char *input)
 	return (-1);
 }
 
-BOOL	interpret_input(t_readin *readin, t_input *input, char *buf, int size)
+static BOOL	return_error(t_readin *readin)
+{
+	readin->state = ERROR;
+	return (FALSE);
+}
+
+static BOOL	interpret_char(t_readin *r, t_input *input, char *buf, int size)
 {
 	int	termcaps;
 
+	buf[size] = '\0';
 	if (buf[0] == 27)
 	{
 		termcaps = get_termcaps(buf);
 		if (termcaps != -1)
 		{
-			if (!termcaps_f(termcaps, readin, input))
-				return (FALSE);
+			if (!termcaps_f(termcaps, r, input))
+				return (return_error(r));
 		}
-		else
-			printf("UNKNOWN TERMCAPS\n");
 	}
 	else if (buf[0] == 127)
 		backspace(input);
-	else if (buf[0] != '\t' && buf[0] != 31)
+	else if (buf[0] == '\t' || buf[0] == 31)
+		return (TRUE);
+	else
 	{
 		if (!insert_char(input, buf, size))
-			return (FALSE);
+			return (return_error(r));
 	}
+	return (TRUE);
+}
+
+BOOL	interpret_input(t_readin *readin, t_input *input, char *buf, int size)
+{
+	if (size <= 0 && errno == EINTR)
+		readin->state = INTERRUPTED;
+	else if (size <= 0)
+		return (return_error(readin));
+	else if (buf[0] == '\n')
+		readin->state = NEWLINE;
+	else if (buf[0] == 4)
+	{
+		if (input->i == 0)
+			readin->state = EOT;
+	}
+	else
+		return (interpret_char(readin, input, buf, size));
 	return (TRUE);
 }
