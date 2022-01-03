@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 01:04:17 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:26:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_echo(t_msh *msh, char **arr, BOOL forked);
 void	ft_cd(t_msh *msh, char **arr, BOOL forked);
 void	ft_pwd(t_msh *msh, char **arr, BOOL forked);
 void	ft_export(t_msh *msh, char **arr, BOOL forked);
-//void	ft_unset(t_msh *msh, char **arr, char **env);
+void	ft_unset(t_msh *msh, char **arr, BOOL forked);
 void	ft_env(t_msh *msh, char **arr, BOOL forked);
 void	ft_getenv(t_msh *msh, char **arr, BOOL forked);
 void	ft_exit(t_msh *msh, char **arr, BOOL forked);

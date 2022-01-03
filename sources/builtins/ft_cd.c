@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 23:15:07 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 00:58:18 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:37:22 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_path(t_msh *msh, char *arg, char **path)
 		*path = get_env(msh, "HOME");
 		if (!(*path))
 		{
-			write(1, "cd: HOME is unset\n", 14);
+			write(1, "cd: HOME is unset\n", 18);
 			return (1);
 		}
 	}
@@ -31,7 +31,7 @@ static int	get_path(t_msh *msh, char *arg, char **path)
 	return (0);
 }
 
-int	ft_cd(t_msh *msh, char **av, BOOL forked)
+void	ft_cd(t_msh *msh, char **av, BOOL forked)
 {
 	int		error;
 	char	*path;
@@ -53,5 +53,5 @@ int	ft_cd(t_msh *msh, char **av, BOOL forked)
 	}
 	if (forked)
 		exit_program(msh, error);
-	return (error);
+	msh->exit_state = error;
 }

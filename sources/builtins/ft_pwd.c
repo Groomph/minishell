@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 23:15:07 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/02 23:29:56 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:37:43 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-int	ft_pwd(t_msh *msh, char **av, BOOL forked)
+void	ft_pwd(t_msh *msh, char **av, BOOL forked)
 {
 	int		error;
 	char	buf[PATH_MAX];
@@ -34,5 +34,5 @@ int	ft_pwd(t_msh *msh, char **av, BOOL forked)
 	write(1, "\n", 1);
 	if (forked)
 		exit_program(msh, error);
-	return (error);
+	msh->exit_state = error;
 }
