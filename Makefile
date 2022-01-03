@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2022/01/03 01:04:50 by rsanchez         ###   ########.fr        #
+#    Updated: 2022/01/03 16:26:32 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SOURCES = main.c error.c exit.c get_input.c env.c\
 	  $(EXE)/exe.c $(EXE)/utils.c \
 	  $(EXE)/builtin_hub.c $(EXE)/redirections.c \
 	  $(BUILT)/ft_export.c $(BUILT)/ft_env.c $(BUILT)/ft_getenv.c \
-	  $(BUILT)/ft_echo.c \
+	  $(BUILT)/ft_unset.c $(BUILT)/ft_echo.c \
 	  $(BUILT)/ft_pwd.c $(BUILT)/ft_cd.c $(BUILT)/ft_exit.c \
 	  $(INOUT)/redirect_in.c $(INOUT)/redirect_out.c
 

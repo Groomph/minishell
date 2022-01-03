@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 23:15:07 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 00:58:18 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:28:22 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_path(t_msh *msh, char *arg, char **path)
 		*path = get_env(msh, "HOME");
 		if (!(*path))
 		{
-			write(1, "cd: HOME is unset\n", 14);
+			write(1, "cd: HOME is unset\n", 18);
 			return (1);
 		}
 	}

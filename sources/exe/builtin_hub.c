@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:23:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 01:04:04 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:25:51 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 
 int	is_builtin(char *name)
 {
-	static char	*builtin[8] = {
-		"export", "env", "getenv", "echo", "pwd", "cd", "exit", NULL};
+	static char	*builtin[9] = {
+		"export", "env", "unset", "getenv", "echo",
+		"pwd", "cd", "exit", NULL};
 	int			i;
 
 	i = 0;
@@ -36,8 +37,8 @@ int	is_builtin(char *name)
 static void	builtin_hub(t_msh *msh, t_command *cmd, BOOL forked)
 {
 	int			type;
-	static void	(*adress[8])(t_msh *, char **, BOOL) = {
-		ft_export, ft_env, ft_getenv, ft_echo,
+	static void	(*adress[9])(t_msh *, char **, BOOL) = {
+		ft_export, ft_env, ft_unset, ft_getenv, ft_echo,
 		ft_pwd, ft_cd, ft_exit, NULL};
 
 	type = is_builtin(cmd->args->arr[0]);
