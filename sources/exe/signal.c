@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:48:30 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 21:25:08 by aldamien         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:31:40 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	what_sig_kill(int status)
 	if (status != 0)
 	{
 		if (WIFSIGNALED(status) == TRUE)
-			return (WTERMSIG(status) + 130);
+			return (WTERMSIG(status) + 128);
 		return (WEXITSTATUS(status));
 	}
 	return (0);

@@ -6,11 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/03 21:14:11 by rsanchez         ###   ########.fr       */
-=======
-/*   Updated: 2022/01/03 21:15:09 by aldamien         ###   ########.fr       */
->>>>>>> origin/romain
+/*   Updated: 2022/01/03 21:54:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +33,9 @@ static void	child_work(t_msh *msh, t_vector *cmds, int i)
 		execve(cmd->name, (char **)cmd->args->arr,
 			(char **)msh->env->arr);
 		write(1, "command not existing\n", 21);
+		exit_program(msh, 127);
 	}
-	exit_program(msh, 1);
+	exit_program(msh, 0);
 }
 
 static void	execute_cmd(t_msh *msh, t_vector *cmds, int i)
