@@ -2,3 +2,4 @@
 libraries/libft/temporary/*
 temporary/*
 .*.o
+minishell
