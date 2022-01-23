@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:58:28 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 22:11:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/23 18:10:33 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_env(t_msh *msh, char *name)
 	return (NULL);
 }
 
+#include <stdio.h>
+
 BOOL	init_env(t_msh *msh, char **env)
 {
 	int		i;
@@ -39,6 +41,8 @@ BOOL	init_env(t_msh *msh, char **env)
 	i = 0;
 	msh->env = vector_new(20);
 	if (!(msh->env))
+		return (FALSE);
+	if (!env)
 		return (FALSE);
 	while (env[i])
 	{
@@ -51,3 +55,6 @@ BOOL	init_env(t_msh *msh, char **env)
 	}
 	return (TRUE);
 }
+//add env to check for env unset
+//should segfault, but didn't
+//still fixed
