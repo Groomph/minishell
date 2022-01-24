@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:58:28 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/23 18:10:33 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:54:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*get_env(t_msh *msh, char *name)
 	}
 	return (NULL);
 }
-
-#include <stdio.h>
 
 BOOL	init_env(t_msh *msh, char **env)
 {
