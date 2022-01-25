@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 14:28:25 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 17:02:32 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:03:07 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static int	second_loop(t_msh *msh, char *arr, char **env)
 	}
 	else
 	{
-		printf("unset: %s: invalid parameter name\n", arr);
+		write(2, "unset: ", 7);
+		write(2, "arr", string_len(arr));
+		write(2, " : invalid parameter name\n", 26);
 		return (1);
 	}
 	return (0);
