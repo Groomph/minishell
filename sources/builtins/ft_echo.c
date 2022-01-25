@@ -6,13 +6,29 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 14:08:59 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 17:02:01 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:09:34 by aldamien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 #include "minishell.h"
 #include "libft.h"
+
+static int	is_n(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[i] != 'n')
+		return (-1);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (-1);
+		i++;
+	}
+	return (1);
+}
 
 void	ft_echo(t_msh *msh, char **arr, BOOL forked)
 {
@@ -21,7 +37,7 @@ void	ft_echo(t_msh *msh, char **arr, BOOL forked)
 
 	i = 1;
 	new_line = TRUE;
-	if (arr[1] && str_n_comp(arr[1], "-n", 3) == 0)
+	if (arr[1] && arr[1][0] == '-' && is_n(arr[1]) == 1)
 	{
 		i = 2;
 		new_line = FALSE;
