@@ -6,21 +6,20 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 14:08:59 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/25 18:09:34 by aldamien         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:27:04 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 #include "minishell.h"
 #include "libft.h"
+#include <unistd.h>
 
 static int	is_n(char *str)
 {
 	int	i;
 
 	i = 1;
-	if (str[i] != 'n')
-		return (-1);
 	while (str[i])
 	{
 		if (str[i] != 'n')
