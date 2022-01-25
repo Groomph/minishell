@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:58:28 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 22:11:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:54:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ BOOL	init_env(t_msh *msh, char **env)
 	msh->env = vector_new(20);
 	if (!(msh->env))
 		return (FALSE);
+	if (!env)
+		return (FALSE);
 	while (env[i])
 	{
 		tmp = string_duplicate(env[i], -1);
@@ -51,3 +53,6 @@ BOOL	init_env(t_msh *msh, char **env)
 	}
 	return (TRUE);
 }
+//add env to check for env unset
+//should segfault, but didn't
+//still fixed

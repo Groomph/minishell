@@ -6,17 +6,23 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 18:47:34 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/12/24 16:14:06 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:29:09 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "read_input.h"
+#include <unistd.h>
 #include <stdio.h>
 #include <termios.h>
 
 BOOL	init_readinput(t_readin *readin)
 {
+	if (!isatty(STDIN_FILENO))
+	{
+		perror("read_input only support tty STDIN");
+		return (FALSE);
+	}
 	if (tcgetattr(0, &(readin->term_config)) == -1)
 	{
 		perror("init read_input: ");

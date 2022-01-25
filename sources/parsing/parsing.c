@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 22:22:00 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 17:04:08 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:15:40 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ static BOOL	parse_separator(char **tokens, int i)
 		return (FALSE);
 	}
 	if (tokens[i][0] == '|' && tokens[i][1] == '\0')
-		return (TRUE);
+	{
+		if (tokens[i][0] == '|' && tokens[i + 1][0] != '|')
+			return (TRUE);
+		write(1, "Syntax error: near unexpected token \"", 37);
+		write(1, tokens[i + 1], string_len(tokens[i + 1]));
+		write(1, "\"\n", 2);
+		return (FALSE);
+	}
 	write(1, "Syntax error: unknown operator \"", 32);
 	write(1, tokens[i], string_len(tokens[i]));
 	write(1, "\"\n", 2);
@@ -100,7 +107,10 @@ int	parser(t_msh *msh, char **tokens, t_vector **list)
 			id++;
 		}
 		if (ret <= 0)
+		{
+			msh->exit_state = 2;
 			return (id * -1);
+		}
 		i += ret;
 	}
 	return (id);

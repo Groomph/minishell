@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 16:05:34 by rsanchez          #+#    #+#              #
-#    Updated: 2022/01/03 21:29:18 by rsanchez         ###   ########.fr        #
+#    Updated: 2022/01/24 14:56:27 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,10 +78,6 @@ bonus: $(NAME)
 $(NAME): $(OBJS)
 	make -C $(LIB)/libft
 	$(CC) $(CFLAGS) -o $(NAME) -ltermcap $(OBJS) $(LIBFT)
-
-$(NAMEB): $(OBJSB)
-	make -C $(LIB)/libft
-	$(CC) $(CFLAGS) -o $(NAMEB) $(OBJSB) $(LIBFT)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c
 	@mkdir -p $(DIR_O)
