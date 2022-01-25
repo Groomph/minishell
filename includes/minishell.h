@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:19:25 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 22:12:44 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:10:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ int			assert_errno(t_msh *msh, int i);
 char		*get_input(t_msh *msh);
 BOOL		init_env(t_msh *msh, char **env);
 char		*get_env(t_msh *msh, char *name);
+BOOL		set_env(t_msh *msh, char *name, char *var);
+int			get_env_index(t_msh *msh, char *name);
+BOOL		set_pwd(t_msh *msh);
 
 #endif

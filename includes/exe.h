@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:36:54 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 22:06:36 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:28:07 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ BOOL	set_signal(int sig, void (*f)(int));
 BOOL	restaure_signal(int sig);
 void	handler(int sig);
 
-int		what_sig_kill(int status);
+void	what_sig_kill(t_msh *msh);
 
 void	ft_echo(t_msh *msh, char **arr, BOOL forked);
 void	ft_cd(t_msh *msh, char **arr, BOOL forked);

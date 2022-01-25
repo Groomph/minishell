@@ -6,7 +6,7 @@
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 12:37:08 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/03 21:54:09 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:36:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 static void	child_work(t_msh *msh, t_vector *cmds, int i)
 {
 	t_command	*cmd;
+	char		*name;
 
 	connect_pipe((t_command **)cmds->arr, i, cmds->size);
 	cmd = cmds->arr[i];
@@ -32,7 +33,9 @@ static void	child_work(t_msh *msh, t_vector *cmds, int i)
 	{
 		execve(cmd->name, (char **)cmd->args->arr,
 			(char **)msh->env->arr);
-		write(1, "command not existing\n", 21);
+		name = (char *)cmd->args->arr[0];
+		write(2, name, string_len(name));
+		write(2, " : command not existing\n", 24);
 		exit_program(msh, 127);
 	}
 	exit_program(msh, 0);
@@ -48,12 +51,6 @@ static void	execute_cmd(t_msh *msh, t_vector *cmds, int i)
 	pid = fork();
 	if (pid == 0)
 		child_work(msh, cmds, i);
-	set_signal(SIGINT, handler);
-	set_signal(SIGQUIT, handler);
-	wait(&msh->exit_state);
-	msh->exit_state = what_sig_kill(msh->exit_state);
-	restaure_signal(SIGINT);
-	restaure_signal(SIGQUIT);
 	close(cmd->pipe[1]);
 	if (i == cmds->size - 1)
 		close(cmd->pipe[0]);
@@ -71,6 +68,8 @@ void	execute_loop(t_msh *msh, t_vector *cmds)
 	t_command	*cmd;
 
 	i = 0;
+	set_signal(SIGINT, handler);
+	set_signal(SIGQUIT, handler);
 	while (cmds->arr[i])
 	{
 		cmd = cmds->arr[i];
@@ -83,4 +82,7 @@ void	execute_loop(t_msh *msh, t_vector *cmds)
 			execute_builtin_pipe(msh, cmds, i);
 		i++;
 	}
+	what_sig_kill(msh);
+	restaure_signal(SIGINT);
+	restaure_signal(SIGQUIT);
 }

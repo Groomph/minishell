@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldamien <aldamien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 18:02:48 by aldamien          #+#    #+#             */
-/*   Updated: 2022/01/01 22:25:55 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 21:55:45 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static BOOL	pars_export(t_msh *msh, char *token)
 
 	if (!is_valid(token))
 	{
-		write(1, "export: '", 9);
-		write(1, token, string_len(token));
-		write(1, "': not a valid identifier\n", 26);
+		write(2, "export: '", 9);
+		write(2, token, string_len(token));
+		write(2, "': not a valid identifier\n", 26);
 		return (FALSE);
 	}
 	token = string_duplicate(token, -1);

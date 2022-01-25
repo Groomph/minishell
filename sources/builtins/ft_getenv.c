@@ -6,13 +6,20 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 23:15:07 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 16:38:37 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:54:02 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
+
+static void	print_error(char *arg)
+{
+	write(2, "getenv: ", 8);
+	write(2, arg, string_len(arg));
+	write(2, " is not set\n", 12);
+}
 
 void	ft_getenv(t_msh *msh, char **av, BOOL forked)
 {
@@ -27,14 +34,14 @@ void	ft_getenv(t_msh *msh, char **av, BOOL forked)
 		var = get_env(msh, av[i]);
 		if (!var)
 		{
-			write(1, "getenv: ", 8);
-			write(1, av[i], string_len(av[i]));
-			write(1, " is not set", 11);
+			print_error(av[i]);
 			error++;
 		}
 		else
+		{
 			write(1, var, string_len(var));
-		write(1, "\n", 1);
+			write(1, "\n", 1);
+		}
 		i++;
 	}
 	if (forked)

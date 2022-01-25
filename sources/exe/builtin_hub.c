@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 02:23:36 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 20:51:49 by aldamien         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:55:04 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	child_built(t_msh *msh, t_vector *cmds, int i)
 	if (!file_redirections(cmd))
 		exit_program(msh, 1);
 	builtin_hub(msh, cmd, TRUE);
-	write(1, "not supposed to happen\n", 23);
+	write(2, "not supposed to happen\n", 23);
 	exit_program(msh, 1);
 }
 
@@ -68,12 +68,6 @@ void	execute_builtin_pipe(t_msh *msh, t_vector *cmds, int i)
 	pid = fork();
 	if (pid == 0)
 		child_built(msh, cmds, i);
-	set_signal(SIGINT, handler);
-	set_signal(SIGQUIT, handler);
-	wait(&msh->exit_state);
-	msh->exit_state = what_sig_kill(msh->exit_state);
-	restaure_signal(SIGINT);
-	restaure_signal(SIGQUIT);
 	close(cmd->pipe[1]);
 	if (i == cmds->size - 1)
 		close(cmd->pipe[0]);
@@ -91,5 +85,7 @@ void	execute_builtin(t_msh *msh, t_command *cmd)
 	save_std(term_fd);
 	if (file_redirections(cmd))
 		builtin_hub(msh, cmd, FALSE);
+	else
+		msh->exit_state = 1;
 	restore_std(term_fd);
 }

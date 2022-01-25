@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 23:15:07 by rsanchez          #+#    #+#             */
-/*   Updated: 2022/01/03 16:37:43 by rsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:57:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,35 @@
 #include <stdio.h>
 #include <limits.h>
 
+static char	*get_pwd(t_msh *msh, int *error)
+{
+	char	*pwd;
+
+	pwd = get_env(msh, "PWD");
+	if (!pwd)
+	{
+		if (!set_pwd(msh))
+		{
+			*error = 1;
+			return (NULL);
+		}
+		pwd = get_env(msh, "PWD");
+		if (!pwd)
+			*error = 1;
+	}
+	return (pwd);
+}
+
 void	ft_pwd(t_msh *msh, char **av, BOOL forked)
 {
 	int		error;
-	char	buf[PATH_MAX];
+	char	*pwd;
 
 	(void)msh;
 	(void)av;
-	error = 0;
-	if (getcwd(buf, PATH_MAX) == NULL)
-	{
-		error = 1;
-		perror("pwd");
-	}
-	else
-		write(1, buf, string_len(buf));
+	pwd = get_pwd(msh, &error);
+	if (pwd)
+		write(1, pwd, string_len(pwd));
 	write(1, "\n", 1);
 	if (forked)
 		exit_program(msh, error);
